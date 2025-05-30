@@ -2,6 +2,7 @@ import 'package:e_commerce_app/Presentation/screens/login_screen.dart';
 import 'package:e_commerce_app/Presentation/widgets/custom_button.dart';
 import 'package:e_commerce_app/Presentation/widgets/custom_text_field.dart';
 import 'package:e_commerce_app/core/colors.dart';
+import 'package:e_commerce_app/services/auth_service.dart';
 
 import 'package:flutter/material.dart';
 
@@ -17,6 +18,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _confirmPasswordController =
       TextEditingController();
+  String selectedRole = 'User';
+
+  void signUp() async {}
+
+  final AuthService _authService = AuthService();
   @override
   Widget build(BuildContext context) {
     return Scaffold(

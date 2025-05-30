@@ -7,6 +7,7 @@ class AuthService {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   Future<String?> signUp({
+    required String name,
     required String email,
     required String password,
     required String role,
@@ -18,6 +19,7 @@ class AuthService {
       );
 
       _firestore.collection('users').doc(credential.user?.uid).set({
+        'name': name.trim(),
         'email': email.trim(),
         'password': password.trim(),
         'role': role,
@@ -30,6 +32,7 @@ class AuthService {
       }
       return e.toString();
     }
+    return null;
   }
 
   Future<String?> logIn({
