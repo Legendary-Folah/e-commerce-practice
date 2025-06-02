@@ -2,6 +2,7 @@ import 'package:e_commerce_app/Presentation/screens/login_screen.dart';
 import 'package:e_commerce_app/Presentation/widgets/custom_button.dart';
 import 'package:e_commerce_app/Presentation/widgets/custom_text_field.dart';
 import 'package:e_commerce_app/core/colors.dart';
+import 'package:e_commerce_app/core/helper_funcs.dart';
 import 'package:e_commerce_app/services/auth_service.dart';
 
 import 'package:flutter/material.dart';
@@ -16,11 +17,40 @@ class SignUpScreen extends StatefulWidget {
 class _SignUpScreenState extends State<SignUpScreen> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _nameController = TextEditingController();
   final TextEditingController _confirmPasswordController =
       TextEditingController();
   String selectedRole = 'User';
+  bool isLoading = false;
+  bool isPasswordVisible = false;
 
-  void signUp() async {}
+  void signUp() async {
+    setState(() {
+      isLoading = true;
+    });
+    String? result = await _authService.signUp(
+      name: _nameController.text,
+      email: _emailController.text,
+      password: _passwordController.text,
+      role: selectedRole,
+    );
+    setState(() {
+      isLoading = false;
+    });
+    if (result == null) {
+      context.showSuccessSnackBar(message: 'Successfully Signed up');
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (_) {
+            return LoginScreen();
+          },
+        ),
+      );
+    } else {
+      context.showErrorSnackBar(message: 'Failed to Sign up $result');
+    }
+  }
 
   final AuthService _authService = AuthService();
   @override
@@ -35,10 +65,25 @@ class _SignUpScreenState extends State<SignUpScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Image.asset('assets/images/signin.png', height: 270),
-              CustomTextField(controller: _emailController),
-              CustomTextField(controller: _passwordController),
-              CustomTextField(controller: _confirmPasswordController),
+              CustomTextField(labelText: 'Name', controller: _nameController),
+              CustomTextField(labelText: 'Email', controller: _emailController),
+              CustomTextField(
+                labelText: 'Password',
+                controller: _passwordController,
+                obscureText: isPasswordVisible ? false : true,
+                suffixIcon: IconButton(
+                  icon: isPasswordVisible
+                      ? Icon(Icons.visibility)
+                      : Icon(Icons.visibility_off),
+                  onPressed: () {
+                    setState(() {
+                      isPasswordVisible = !isPasswordVisible;
+                    });
+                  },
+                ),
+              ),
               DropdownButtonFormField(
+                value: selectedRole,
                 decoration: InputDecoration(
                   labelText: 'Role',
                   border: OutlineInputBorder(
@@ -48,15 +93,21 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 items: ['Admin', 'User'].map((role) {
                   return DropdownMenuItem(value: role, child: Text(role));
                 }).toList(),
-                onChanged: (String? newValue) {},
+                onChanged: (String? newValue) {
+                  setState(() {
+                    selectedRole = newValue ?? 'User';
+                  });
+                },
               ),
               SizedBox(height: 5),
-              CustomButton(
-                width: 130,
-                height: 45,
-                text: 'Sign Up',
-                onPressed: () {},
-              ),
+              isLoading
+                  ? CircularProgressIndicator(color: ColorsConst.kPurple)
+                  : CustomButton(
+                      width: 130,
+                      height: 45,
+                      text: 'Sign Up',
+                      onPressed: signUp,
+                    ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 spacing: 5,

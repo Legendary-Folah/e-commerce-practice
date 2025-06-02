@@ -8,4 +8,6 @@ class ColorsConst {
   static const Color kPurple = Colors.purpleAccent;
   static const Color kGrey = Colors.grey;
   static const Color kBlue = Colors.blueAccent;
+  static const Color kGreen = Colors.green;
+  static const Color kRed = Colors.red;
 }

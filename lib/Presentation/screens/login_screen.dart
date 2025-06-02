@@ -28,8 +28,15 @@ class _LoginScreenState extends State<LoginScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Image.asset('assets/images/login.png', height: 350),
-                CustomTextField(controller: _emailController),
-                CustomTextField(controller: _passwordController),
+                CustomTextField(
+                  labelText: 'Email',
+                  controller: _emailController,
+                ),
+                CustomTextField(
+                  labelText: 'Password',
+                  controller: _passwordController,
+                  obscureText: true,
+                ),
                 CustomButton(
                   width: 130,
                   height: 45,
