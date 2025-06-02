@@ -1,7 +1,11 @@
+import 'package:e_commerce_app/Presentation/screens/admin_screen.dart';
 import 'package:e_commerce_app/Presentation/screens/sign_up_screen.dart';
+import 'package:e_commerce_app/Presentation/screens/user_screen.dart';
 import 'package:e_commerce_app/Presentation/widgets/custom_button.dart';
 import 'package:e_commerce_app/Presentation/widgets/custom_text_field.dart';
 import 'package:e_commerce_app/core/colors.dart';
+import 'package:e_commerce_app/core/helper_funcs.dart';
+import 'package:e_commerce_app/services/auth_service.dart';
 
 import 'package:flutter/material.dart';
 
@@ -15,6 +19,50 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  final AuthService _authService = AuthService();
+  bool isPasswordVisible = false;
+  bool isLoading = false;
+  String selectedRole = 'User';
+
+  void logIn() async {
+    setState(() {
+      isLoading = true;
+    });
+
+    String? result = await _authService.logIn(
+      email: _emailController.text,
+      password: _passwordController.text,
+      role: selectedRole,
+    );
+    setState(() {
+      isLoading = false;
+    });
+
+    if (result == 'Admin') {
+      context.showSuccessSnackBar(message: 'Successfully Logged in as Admin');
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (_) {
+            return AdminScreen(); // Replace with your home screen
+          },
+        ),
+      );
+    } else if (result == 'User') {
+      context.showSuccessSnackBar(message: 'Successfully Logged in');
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (_) {
+            return UserScreen(); // Replace with your admin dashboard
+          },
+        ),
+      );
+    } else {
+      context.showErrorSnackBar(message: 'Failed to Log in $result');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,14 +83,26 @@ class _LoginScreenState extends State<LoginScreen> {
                 CustomTextField(
                   labelText: 'Password',
                   controller: _passwordController,
-                  obscureText: true,
+                  obscureText: isPasswordVisible ? false : true,
+                  suffixIcon: IconButton(
+                    icon: isPasswordVisible
+                        ? Icon(Icons.visibility)
+                        : Icon(Icons.visibility_off),
+                    onPressed: () {
+                      setState(() {
+                        isPasswordVisible = !isPasswordVisible;
+                      });
+                    },
+                  ),
                 ),
-                CustomButton(
-                  width: 130,
-                  height: 45,
-                  text: 'Log in',
-                  onPressed: () {},
-                ),
+                isLoading
+                    ? CircularProgressIndicator(color: ColorsConst.kPurple)
+                    : CustomButton(
+                        width: 130,
+                        height: 45,
+                        text: 'Log in',
+                        onPressed: logIn,
+                      ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   spacing: 5,

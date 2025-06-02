@@ -18,8 +18,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _nameController = TextEditingController();
-  final TextEditingController _confirmPasswordController =
-      TextEditingController();
+  final AuthService _authService = AuthService();
+
   String selectedRole = 'User';
   bool isLoading = false;
   bool isPasswordVisible = false;
@@ -52,7 +52,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
     }
   }
 
-  final AuthService _authService = AuthService();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -128,7 +127,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       );
                     },
                     child: Text(
-                      'Sign Up',
+                      'Log in here',
                       style: TextStyle(color: ColorsConst.kBlue, fontSize: 14),
                     ),
                   ),
