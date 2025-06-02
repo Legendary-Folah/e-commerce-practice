@@ -1,6 +1,6 @@
 import 'package:e_commerce_app/Presentation/screens/login_screen.dart';
-import 'package:e_commerce_app/Presentation/widgets/custom_button.dart';
-import 'package:e_commerce_app/Presentation/widgets/custom_text_field.dart';
+import 'package:e_commerce_app/core/widgets/custom_button.dart';
+import 'package:e_commerce_app/core/widgets/custom_text_field.dart';
 import 'package:e_commerce_app/core/colors.dart';
 import 'package:e_commerce_app/core/helper_funcs.dart';
 import 'package:e_commerce_app/services/auth_service.dart';

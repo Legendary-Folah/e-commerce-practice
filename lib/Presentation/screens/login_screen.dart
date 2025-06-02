@@ -1,8 +1,8 @@
-import 'package:e_commerce_app/Presentation/screens/admin_screen.dart';
+import 'package:e_commerce_app/Presentation/screens/role_based_login/admin/screen/admin_home_screen.dart';
+import 'package:e_commerce_app/Presentation/screens/role_based_login/user/user_app_first_screen.dart';
 import 'package:e_commerce_app/Presentation/screens/sign_up_screen.dart';
-import 'package:e_commerce_app/Presentation/screens/user_screen.dart';
-import 'package:e_commerce_app/Presentation/widgets/custom_button.dart';
-import 'package:e_commerce_app/Presentation/widgets/custom_text_field.dart';
+import 'package:e_commerce_app/core/widgets/custom_button.dart';
+import 'package:e_commerce_app/core/widgets/custom_text_field.dart';
 import 'package:e_commerce_app/core/colors.dart';
 import 'package:e_commerce_app/core/helper_funcs.dart';
 import 'package:e_commerce_app/services/auth_service.dart';
@@ -28,7 +28,6 @@ class _LoginScreenState extends State<LoginScreen> {
     setState(() {
       isLoading = true;
     });
-
     String? result = await _authService.logIn(
       email: _emailController.text,
       password: _passwordController.text,
@@ -44,7 +43,7 @@ class _LoginScreenState extends State<LoginScreen> {
         context,
         MaterialPageRoute(
           builder: (_) {
-            return AdminScreen(); // Replace with your home screen
+            return AdminHomeScreen(); // Replace with your home screen
           },
         ),
       );
@@ -54,7 +53,7 @@ class _LoginScreenState extends State<LoginScreen> {
         context,
         MaterialPageRoute(
           builder: (_) {
-            return UserScreen(); // Replace with your admin dashboard
+            return UserAppFirstScreen(); // Replace with your admin dashboard
           },
         ),
       );

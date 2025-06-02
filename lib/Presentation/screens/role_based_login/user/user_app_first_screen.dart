@@ -2,14 +2,14 @@ import 'package:e_commerce_app/Presentation/screens/login_screen.dart';
 import 'package:e_commerce_app/services/auth_service.dart';
 import 'package:flutter/material.dart';
 
-class UserScreen extends StatefulWidget {
-  const UserScreen({super.key});
+class UserAppFirstScreen extends StatefulWidget {
+  const UserAppFirstScreen({super.key});
 
   @override
-  State<UserScreen> createState() => _UserScreenState();
+  State<UserAppFirstScreen> createState() => _UserAppFirstScreenState();
 }
 
-class _UserScreenState extends State<UserScreen> {
+class _UserAppFirstScreenState extends State<UserAppFirstScreen> {
   final AuthService _authService = AuthService();
 
   @override
