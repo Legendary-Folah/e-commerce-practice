@@ -1,6 +1,5 @@
 import 'package:e_commerce_app/Presentation/screens/login_screen.dart';
 import 'package:e_commerce_app/services/auth_service.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class UserScreen extends StatefulWidget {
