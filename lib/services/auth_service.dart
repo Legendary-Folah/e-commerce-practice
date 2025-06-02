@@ -1,4 +1,3 @@
-import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -17,7 +16,6 @@ class AuthService {
         email: email.trim(),
         password: password.trim(),
       );
-
       _firestore.collection('users').doc(credential.user?.uid).set({
         'name': name.trim(),
         'email': email.trim(),
@@ -45,7 +43,6 @@ class AuthService {
         email: email.trim(),
         password: password.trim(),
       );
-
       DocumentSnapshot userDoc = await _firestore
           .collection('users')
           .doc(credential.user?.uid)
@@ -53,6 +50,15 @@ class AuthService {
       return userDoc['role'];
     } catch (e) {
       return e.toString();
+    }
+  }
+
+  Future<void> signOut() async {
+    try {
+      await _auth.signOut();
+      print('User signed out successfully');
+    } catch (e) {
+      print('Error signing out : $e');
     }
   }
 }
