@@ -1,5 +1,6 @@
 import 'package:e_commerce_app/core/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class CustomTextField extends StatelessWidget {
   const CustomTextField({
@@ -8,16 +9,25 @@ class CustomTextField extends StatelessWidget {
     required this.labelText,
     this.obscureText,
     this.suffixIcon,
+    this.inputFormatters,
+    this.keyboardType,
+    this.validator,
   });
 
   final TextEditingController controller;
   final String labelText;
   final bool? obscureText;
   final Widget? suffixIcon;
+  final FormFieldValidator<String?>? validator;
+  final List<TextInputFormatter>? inputFormatters;
+  final TextInputType? keyboardType;
 
   @override
   Widget build(BuildContext context) {
-    return TextField(
+    return TextFormField(
+      validator: validator,
+      inputFormatters: inputFormatters,
+      keyboardType: keyboardType,
       obscureText: obscureText ?? false,
       controller: controller,
       decoration: InputDecoration(

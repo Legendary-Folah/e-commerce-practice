@@ -1,6 +1,7 @@
 import 'package:e_commerce_app/Presentation/screens/role_based_login/admin/screen/admin_home_screen.dart';
 import 'package:e_commerce_app/Presentation/screens/role_based_login/user/user_app_first_screen.dart';
 import 'package:e_commerce_app/Presentation/screens/sign_up_screen.dart';
+import 'package:e_commerce_app/core/form_validations.dart';
 import 'package:e_commerce_app/core/widgets/custom_button.dart';
 import 'package:e_commerce_app/core/widgets/custom_text_field.dart';
 import 'package:e_commerce_app/core/colors.dart';
@@ -20,6 +21,7 @@ class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final AuthService _authService = AuthService();
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   bool isPasswordVisible = false;
   bool isLoading = false;
   String selectedRole = 'User';
@@ -68,71 +70,80 @@ class _LoginScreenState extends State<LoginScreen> {
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 10),
-          child: SingleChildScrollView(
-            scrollDirection: Axis.vertical,
-            child: Column(
-              spacing: 10,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Image.asset('assets/images/login.png', height: 350),
-                CustomTextField(
-                  labelText: 'Email',
-                  controller: _emailController,
-                ),
-                CustomTextField(
-                  labelText: 'Password',
-                  controller: _passwordController,
-                  obscureText: isPasswordVisible ? false : true,
-                  suffixIcon: IconButton(
-                    icon: isPasswordVisible
-                        ? Icon(Icons.visibility)
-                        : Icon(Icons.visibility_off),
-                    onPressed: () {
-                      setState(() {
-                        isPasswordVisible = !isPasswordVisible;
-                      });
+          child: Form(
+            key: formKey,
+            child: SingleChildScrollView(
+              scrollDirection: Axis.vertical,
+              child: Column(
+                spacing: 10,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Image.asset('assets/images/login.png', height: 350),
+                  CustomTextField(
+                    labelText: 'Email',
+                    controller: _emailController,
+                    validator: (value) {
+                      return FormValidations.validateEmailField(value);
                     },
                   ),
-                ),
-                isLoading
-                    ? CircularProgressIndicator(color: ColorsConst.kPurple)
-                    : CustomButton(
-                        width: 130,
-                        height: 45,
-                        text: 'Log in',
-                        onPressed: logIn,
-                      ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  spacing: 5,
-                  children: [
-                    Text(
-                      'Don\'t have an account?',
-                      style: TextStyle(fontSize: 14),
-                    ),
-                    InkWell(
-                      onTap: () {
-                        // Navigate to Sign Up screen
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) {
-                              return SignUpScreen();
-                            },
-                          ),
-                        );
+                  CustomTextField(
+                    labelText: 'Password',
+                    controller: _passwordController,
+                    obscureText: isPasswordVisible ? false : true,
+                    suffixIcon: IconButton(
+                      icon: isPasswordVisible
+                          ? Icon(Icons.visibility)
+                          : Icon(Icons.visibility_off),
+                      onPressed: () {
+                        setState(() {
+                          isPasswordVisible = !isPasswordVisible;
+                        });
                       },
-                      child: Text(
-                        'Sign up here',
-                        style: TextStyle(
-                          color: ColorsConst.kBlue,
-                          fontSize: 14,
+                    ),
+                    validator: (value) {
+                      return FormValidations.validateRequiredField(value);
+                    },
+                  ),
+                  isLoading
+                      ? CircularProgressIndicator(color: ColorsConst.kPurple)
+                      : CustomButton(
+                          width: 130,
+                          height: 45,
+                          text: 'Log in',
+                          onPressed: logIn,
+                        ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    spacing: 5,
+                    children: [
+                      Text(
+                        'Don\'t have an account?',
+                        style: TextStyle(fontSize: 14),
+                      ),
+                      InkWell(
+                        onTap: () {
+                          // Navigate to Sign Up screen
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) {
+                                return SignUpScreen();
+                              },
+                            ),
+                          );
+                        },
+                        child: Text(
+                          'Sign up here',
+                          style: TextStyle(
+                            color: ColorsConst.kBlue,
+                            fontSize: 14,
+                          ),
                         ),
                       ),
-                    ),
-                  ],
-                ),
-              ],
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
         ),

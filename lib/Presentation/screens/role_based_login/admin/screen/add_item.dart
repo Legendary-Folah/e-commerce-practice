@@ -24,7 +24,7 @@ class _AddItemState extends State<AddItem> {
         padding: EdgeInsetsGeometry.symmetric(horizontal: 25, vertical: 25),
         child: SingleChildScrollView(
           child: Column(
-            spacing: 10,
+            spacing: 13,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Center(
