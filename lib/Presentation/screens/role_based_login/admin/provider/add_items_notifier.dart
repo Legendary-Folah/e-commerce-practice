@@ -37,8 +37,40 @@ class AddItemNotifier extends StateNotifier<AddItemModel> {
     state = state.copyWith(sizes: [...state.sizes, size]);
   }
 
+  // remove size
   void removeSize(String size) {
     state = state.copyWith(sizes: state.sizes.where((s) => s != size).toList());
+  }
+
+  // add color
+  void addColor(String color) {
+    state = state.copyWith(colors: [...state.colors, color]);
+  }
+
+  // remove color
+  void removeColor(String color) {
+    state = state.copyWith(
+      colors: state.colors.where((c) => c != color).toList(),
+    );
+  }
+
+  // for discount
+  void toggleDiscount(bool? isDiscounted) {
+    state = state.copyWith(isDiscounted: isDiscounted);
+  }
+
+  void setDiscountPercentage(String? discountPercentage) {
+    state = state.copyWith(discountPercentage: discountPercentage);
+  }
+
+  void setLoading(bool? isLoading) {
+    state = state.copyWith(isLoading: isLoading);
+  }
+
+  Future<void> fetchCategories() async {
+    try {} catch (e) {
+      throw Exception('Failed to fetch categories: $e');
+    }
   }
 }
 
