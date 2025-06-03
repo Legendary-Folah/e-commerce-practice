@@ -74,6 +74,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   validator: (value) {
                     return FormValidations.validateEmailField(value);
                   },
+                  keyboardType: TextInputType.name,
                 ),
                 CustomTextField(
                   labelText: 'Email',
@@ -81,6 +82,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   validator: (value) {
                     return FormValidations.validateEmailField(value);
                   },
+                  keyboardType: TextInputType.emailAddress,
                 ),
                 CustomTextField(
                   labelText: 'Password',

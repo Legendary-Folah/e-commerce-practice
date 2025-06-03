@@ -85,6 +85,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     validator: (value) {
                       return FormValidations.validateEmailField(value);
                     },
+                    keyboardType: TextInputType.emailAddress,
                   ),
                   CustomTextField(
                     labelText: 'Password',
