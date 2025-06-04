@@ -16,7 +16,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$AddItemModel {
 
- String? get imagePath; bool? get isLoading; String? get selectedCategory; List<String> get categories; List<String> get sizes; List<String> get colors; bool? get isDiscounted; String? get discountPercentage;
+ String? get imagePath; bool? get isLoading; String? get selectedCategory; List<String> get categories; List<String> get sizes; List<String> get colors; bool get isDiscounted; String? get discountPercentage;
 /// Create a copy of AddItemModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -49,7 +49,7 @@ abstract mixin class $AddItemModelCopyWith<$Res>  {
   factory $AddItemModelCopyWith(AddItemModel value, $Res Function(AddItemModel) _then) = _$AddItemModelCopyWithImpl;
 @useResult
 $Res call({
- String? imagePath, bool? isLoading, String? selectedCategory, List<String> categories, List<String> sizes, List<String> colors, bool? isDiscounted, String? discountPercentage
+ String? imagePath, bool? isLoading, String? selectedCategory, List<String> categories, List<String> sizes, List<String> colors, bool isDiscounted, String? discountPercentage
 });
 
 
@@ -66,7 +66,7 @@ class _$AddItemModelCopyWithImpl<$Res>
 
 /// Create a copy of AddItemModel
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? imagePath = freezed,Object? isLoading = freezed,Object? selectedCategory = freezed,Object? categories = null,Object? sizes = null,Object? colors = null,Object? isDiscounted = freezed,Object? discountPercentage = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? imagePath = freezed,Object? isLoading = freezed,Object? selectedCategory = freezed,Object? categories = null,Object? sizes = null,Object? colors = null,Object? isDiscounted = null,Object? discountPercentage = freezed,}) {
   return _then(_self.copyWith(
 imagePath: freezed == imagePath ? _self.imagePath : imagePath // ignore: cast_nullable_to_non_nullable
 as String?,isLoading: freezed == isLoading ? _self.isLoading : isLoading // ignore: cast_nullable_to_non_nullable
@@ -74,8 +74,8 @@ as bool?,selectedCategory: freezed == selectedCategory ? _self.selectedCategory 
 as String?,categories: null == categories ? _self.categories : categories // ignore: cast_nullable_to_non_nullable
 as List<String>,sizes: null == sizes ? _self.sizes : sizes // ignore: cast_nullable_to_non_nullable
 as List<String>,colors: null == colors ? _self.colors : colors // ignore: cast_nullable_to_non_nullable
-as List<String>,isDiscounted: freezed == isDiscounted ? _self.isDiscounted : isDiscounted // ignore: cast_nullable_to_non_nullable
-as bool?,discountPercentage: freezed == discountPercentage ? _self.discountPercentage : discountPercentage // ignore: cast_nullable_to_non_nullable
+as List<String>,isDiscounted: null == isDiscounted ? _self.isDiscounted : isDiscounted // ignore: cast_nullable_to_non_nullable
+as bool,discountPercentage: freezed == discountPercentage ? _self.discountPercentage : discountPercentage // ignore: cast_nullable_to_non_nullable
 as String?,
   ));
 }
@@ -87,7 +87,7 @@ as String?,
 @JsonSerializable()
 
 class _AddItemModel implements AddItemModel {
-  const _AddItemModel({this.imagePath, this.isLoading, this.selectedCategory, final  List<String> categories = const [], final  List<String> sizes = const [], final  List<String> colors = const [], this.isDiscounted, this.discountPercentage}): _categories = categories,_sizes = sizes,_colors = colors;
+  const _AddItemModel({this.imagePath, this.isLoading, this.selectedCategory, final  List<String> categories = const [], final  List<String> sizes = const [], final  List<String> colors = const [], this.isDiscounted = false, this.discountPercentage}): _categories = categories,_sizes = sizes,_colors = colors;
   factory _AddItemModel.fromJson(Map<String, dynamic> json) => _$AddItemModelFromJson(json);
 
 @override final  String? imagePath;
@@ -114,7 +114,7 @@ class _AddItemModel implements AddItemModel {
   return EqualUnmodifiableListView(_colors);
 }
 
-@override final  bool? isDiscounted;
+@override@JsonKey() final  bool isDiscounted;
 @override final  String? discountPercentage;
 
 /// Create a copy of AddItemModel
@@ -150,7 +150,7 @@ abstract mixin class _$AddItemModelCopyWith<$Res> implements $AddItemModelCopyWi
   factory _$AddItemModelCopyWith(_AddItemModel value, $Res Function(_AddItemModel) _then) = __$AddItemModelCopyWithImpl;
 @override @useResult
 $Res call({
- String? imagePath, bool? isLoading, String? selectedCategory, List<String> categories, List<String> sizes, List<String> colors, bool? isDiscounted, String? discountPercentage
+ String? imagePath, bool? isLoading, String? selectedCategory, List<String> categories, List<String> sizes, List<String> colors, bool isDiscounted, String? discountPercentage
 });
 
 
@@ -167,7 +167,7 @@ class __$AddItemModelCopyWithImpl<$Res>
 
 /// Create a copy of AddItemModel
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? imagePath = freezed,Object? isLoading = freezed,Object? selectedCategory = freezed,Object? categories = null,Object? sizes = null,Object? colors = null,Object? isDiscounted = freezed,Object? discountPercentage = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? imagePath = freezed,Object? isLoading = freezed,Object? selectedCategory = freezed,Object? categories = null,Object? sizes = null,Object? colors = null,Object? isDiscounted = null,Object? discountPercentage = freezed,}) {
   return _then(_AddItemModel(
 imagePath: freezed == imagePath ? _self.imagePath : imagePath // ignore: cast_nullable_to_non_nullable
 as String?,isLoading: freezed == isLoading ? _self.isLoading : isLoading // ignore: cast_nullable_to_non_nullable
@@ -175,8 +175,8 @@ as bool?,selectedCategory: freezed == selectedCategory ? _self.selectedCategory 
 as String?,categories: null == categories ? _self._categories : categories // ignore: cast_nullable_to_non_nullable
 as List<String>,sizes: null == sizes ? _self._sizes : sizes // ignore: cast_nullable_to_non_nullable
 as List<String>,colors: null == colors ? _self._colors : colors // ignore: cast_nullable_to_non_nullable
-as List<String>,isDiscounted: freezed == isDiscounted ? _self.isDiscounted : isDiscounted // ignore: cast_nullable_to_non_nullable
-as bool?,discountPercentage: freezed == discountPercentage ? _self.discountPercentage : discountPercentage // ignore: cast_nullable_to_non_nullable
+as List<String>,isDiscounted: null == isDiscounted ? _self.isDiscounted : isDiscounted // ignore: cast_nullable_to_non_nullable
+as bool,discountPercentage: freezed == discountPercentage ? _self.discountPercentage : discountPercentage // ignore: cast_nullable_to_non_nullable
 as String?,
   ));
 }

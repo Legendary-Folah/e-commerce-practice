@@ -12,7 +12,7 @@ abstract class AddItemModel with _$AddItemModel {
     @Default([]) List<String> categories,
     @Default([]) List<String> sizes,
     @Default([]) List<String> colors,
-    bool? isDiscounted,
+    @Default(false) bool isDiscounted,
     String? discountPercentage,
   }) = _AddItemModel;
 

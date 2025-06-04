@@ -59,7 +59,7 @@ class AddItemNotifier extends StateNotifier<AddItemModel> {
 
   // for discount
   void toggleDiscount(bool? isDiscounted) {
-    state = state.copyWith(isDiscounted: isDiscounted);
+    state = state.copyWith(isDiscounted: isDiscounted!);
   }
 
   void setDiscountPercentage(String? discountPercentage) {
@@ -90,7 +90,6 @@ class AddItemNotifier extends StateNotifier<AddItemModel> {
         state.imagePath == null ||
         state.selectedCategory == null ||
         state.discountPercentage == null ||
-        state.isDiscounted == null ||
         state.sizes.isEmpty ||
         state.colors.isEmpty) {
       throw Exception('Please fill all fields and upload an image');
@@ -114,7 +113,7 @@ class AddItemNotifier extends StateNotifier<AddItemModel> {
         'sizes': state.sizes,
         'colors': state.colors,
         'isDiscounted': state.isDiscounted,
-        'discountPercentage': state.isDiscounted!
+        'discountPercentage': state.isDiscounted
             ? int.tryParse(state.discountPercentage!)
             : 0,
         'uid': uid,

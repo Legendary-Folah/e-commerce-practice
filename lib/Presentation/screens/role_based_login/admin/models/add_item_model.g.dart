@@ -24,7 +24,7 @@ _AddItemModel _$AddItemModelFromJson(Map<String, dynamic> json) =>
               ?.map((e) => e as String)
               .toList() ??
           const [],
-      isDiscounted: json['isDiscounted'] as bool?,
+      isDiscounted: json['isDiscounted'] as bool? ?? false,
       discountPercentage: json['discountPercentage'] as String?,
     );
 

@@ -53,14 +53,18 @@ class AddItem extends ConsumerWidget {
                           },
                           child: const Icon(
                             Icons.add_a_photo,
-                            size: 50,
+                            size: 30,
                             color: Colors.grey,
                           ),
                         ),
                 ),
               ),
               CustomTextField(controller: _nameController, labelText: 'Name'),
-              CustomTextField(controller: _priceController, labelText: 'Price'),
+              CustomTextField(
+                controller: _priceController,
+                labelText: 'Price',
+                keyboardType: TextInputType.numberWithOptions(),
+              ),
               DropdownButtonFormField<String>(
                 decoration: InputDecoration(
                   labelText: 'Category',
@@ -106,7 +110,7 @@ class AddItem extends ConsumerWidget {
               Wrap(
                 spacing: 8,
                 runSpacing: 4,
-                children: addItemState.sizes.map((color) {
+                children: addItemState.colors.map((color) {
                   return Chip(
                     label: Text(color),
                     onDeleted: () => addItemNotifier.removeColor(color),
@@ -114,14 +118,16 @@ class AddItem extends ConsumerWidget {
                 }).toList(),
               ),
               Row(
+                spacing: 1,
                 children: [
                   Checkbox(
                     value: addItemState.isDiscounted,
                     onChanged: addItemNotifier.toggleDiscount,
                   ),
+                  Text('Apply Discount'),
                 ],
               ),
-              if (addItemState.isDiscounted!)
+              if (addItemState.isDiscounted)
                 Column(
                   children: [
                     CustomTextField(
@@ -129,39 +135,37 @@ class AddItem extends ConsumerWidget {
                       labelText: 'Discount Percentage (%)',
                       onFieldSubmitted: (value) {
                         addItemNotifier.setDiscountPercentage(value);
-                        _discountPercentageController.clear();
+                        // _discountPercentageController.clear();
                       },
                     ),
                     SizedBox(height: 8),
-                    addItemState.isLoading!
-                        ? Center(child: CircularProgressIndicator())
-                        : Center(
-                            child: CustomButton(
-                              height: 45,
-                              width: 180,
-                              text: 'Add Items',
-                              onPressed: () async {
-                                try {
-                                  await addItemNotifier.saveAndUploadItem(
-                                    _nameController.text,
-                                    _priceController.text,
-                                  );
-                                  context.showSuccessSnackBar(
-                                    message: 'Item Added Successfully',
-                                  );
-                                  _nameController.clear();
-                                  _priceController.clear();
-                                } catch (e) {
-                                  context.showErrorSnackBar(
-                                    message: 'Error: $e',
-                                  );
-                                  throw Exception('Failed to add item: $e');
-                                }
-                              },
-                            ),
-                          ),
                   ],
                 ),
+              addItemState.isLoading ?? false
+                  ? Center(child: CircularProgressIndicator())
+                  : Center(
+                      child: CustomButton(
+                        height: 45,
+                        width: 180,
+                        text: 'Add Items',
+                        onPressed: () async {
+                          try {
+                            await addItemNotifier.saveAndUploadItem(
+                              _nameController.text,
+                              _priceController.text,
+                            );
+                            context.showSuccessSnackBar(
+                              message: 'Item Added Successfully',
+                            );
+                            _nameController.clear();
+                            _priceController.clear();
+                          } catch (e) {
+                            context.showErrorSnackBar(message: 'Error: $e');
+                            throw Exception('Failed to add item: $e');
+                          }
+                        },
+                      ),
+                    ),
             ],
           ),
         ),
