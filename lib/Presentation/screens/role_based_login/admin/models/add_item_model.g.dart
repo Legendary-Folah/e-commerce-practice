@@ -11,8 +11,8 @@ _AddItemModel _$AddItemModelFromJson(Map<String, dynamic> json) =>
       imagePath: json['imagePath'] as String?,
       isLoading: json['isLoading'] as bool?,
       selectedCategory: json['selectedCategory'] as String?,
-      catergories:
-          (json['catergories'] as List<dynamic>?)
+      categories:
+          (json['categories'] as List<dynamic>?)
               ?.map((e) => e as String)
               .toList() ??
           const [],
@@ -33,7 +33,7 @@ Map<String, dynamic> _$AddItemModelToJson(_AddItemModel instance) =>
       'imagePath': instance.imagePath,
       'isLoading': instance.isLoading,
       'selectedCategory': instance.selectedCategory,
-      'catergories': instance.catergories,
+      'categories': instance.categories,
       'sizes': instance.sizes,
       'colors': instance.colors,
       'isDiscounted': instance.isDiscounted,

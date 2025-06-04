@@ -1,5 +1,9 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_commerce_app/Presentation/screens/role_based_login/admin/models/add_item_model.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -9,9 +13,8 @@ class AddItemNotifier extends StateNotifier<AddItemModel> {
   final CollectionReference items = FirebaseFirestore.instance.collection(
     'items',
   );
-  final CollectionReference categories = FirebaseFirestore.instance.collection(
-    'category',
-  );
+  final CollectionReference categoriesCollection = FirebaseFirestore.instance
+      .collection('category');
 
   // method to select image from gallery
   void pickmage() async {
@@ -20,7 +23,7 @@ class AddItemNotifier extends StateNotifier<AddItemModel> {
         source: ImageSource.gallery,
       );
       if (pickedFile != null) {
-        state = state.copyWith(imagePath: pickedFile.path ?? "");
+        state = state.copyWith(imagePath: pickedFile.path);
       }
     } catch (e) {
       throw Exception('Failed to pick image: $e');
@@ -67,9 +70,60 @@ class AddItemNotifier extends StateNotifier<AddItemModel> {
     state = state.copyWith(isLoading: isLoading);
   }
 
+  // fetch categories
   Future<void> fetchCategories() async {
-    try {} catch (e) {
+    try {
+      QuerySnapshot snapshot = await categoriesCollection.get();
+      List<String> categories = snapshot.docs
+          .map((doc) => doc['name'] as String)
+          .toList();
+      state = state.copyWith(categories: categories);
+    } catch (e) {
       throw Exception('Failed to fetch categories: $e');
+    }
+  }
+
+  // save and upload items
+  Future<void> saveAndUploadItem(String name, String price) async {
+    if (name.isEmpty ||
+        price.isEmpty ||
+        state.imagePath == null ||
+        state.selectedCategory == null ||
+        state.discountPercentage == null ||
+        state.isDiscounted == null ||
+        state.sizes.isEmpty ||
+        state.colors.isEmpty) {
+      throw Exception('Please fill all fields and upload an image');
+    }
+    state = state.copyWith(isLoading: true);
+    try {
+      final fileName = DateTime.now().microsecondsSinceEpoch.toString();
+      final reference = FirebaseStorage.instance.ref().child(
+        'images/$fileName',
+      );
+      await reference.putFile(File(state.imagePath!));
+      final imageURL = await reference.getDownloadURL();
+
+      // save the items to firebase
+      final String uid = FirebaseAuth.instance.currentUser!.uid;
+      await items.add({
+        'name': name,
+        'price': double.parse(price),
+        'imageURL': imageURL,
+        'category': state.selectedCategory,
+        'sizes': state.sizes,
+        'colors': state.colors,
+        'isDiscounted': state.isDiscounted,
+        'discountPercentage': state.isDiscounted!
+            ? int.tryParse(state.discountPercentage!)
+            : 0,
+        'uid': uid,
+      });
+      state = AddItemModel();
+    } catch (e) {
+      throw Exception('error saving items : $e');
+    } finally {
+      state = state.copyWith(isLoading: false);
     }
   }
 }

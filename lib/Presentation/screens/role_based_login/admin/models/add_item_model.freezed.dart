@@ -16,7 +16,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$AddItemModel {
 
- String? get imagePath; bool? get isLoading; String? get selectedCategory; List<String> get catergories; List<String> get sizes; List<String> get colors; bool? get isDiscounted; String? get discountPercentage;
+ String? get imagePath; bool? get isLoading; String? get selectedCategory; List<String> get categories; List<String> get sizes; List<String> get colors; bool? get isDiscounted; String? get discountPercentage;
 /// Create a copy of AddItemModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -29,16 +29,16 @@ $AddItemModelCopyWith<AddItemModel> get copyWith => _$AddItemModelCopyWithImpl<A
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is AddItemModel&&(identical(other.imagePath, imagePath) || other.imagePath == imagePath)&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.selectedCategory, selectedCategory) || other.selectedCategory == selectedCategory)&&const DeepCollectionEquality().equals(other.catergories, catergories)&&const DeepCollectionEquality().equals(other.sizes, sizes)&&const DeepCollectionEquality().equals(other.colors, colors)&&(identical(other.isDiscounted, isDiscounted) || other.isDiscounted == isDiscounted)&&(identical(other.discountPercentage, discountPercentage) || other.discountPercentage == discountPercentage));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is AddItemModel&&(identical(other.imagePath, imagePath) || other.imagePath == imagePath)&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.selectedCategory, selectedCategory) || other.selectedCategory == selectedCategory)&&const DeepCollectionEquality().equals(other.categories, categories)&&const DeepCollectionEquality().equals(other.sizes, sizes)&&const DeepCollectionEquality().equals(other.colors, colors)&&(identical(other.isDiscounted, isDiscounted) || other.isDiscounted == isDiscounted)&&(identical(other.discountPercentage, discountPercentage) || other.discountPercentage == discountPercentage));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,imagePath,isLoading,selectedCategory,const DeepCollectionEquality().hash(catergories),const DeepCollectionEquality().hash(sizes),const DeepCollectionEquality().hash(colors),isDiscounted,discountPercentage);
+int get hashCode => Object.hash(runtimeType,imagePath,isLoading,selectedCategory,const DeepCollectionEquality().hash(categories),const DeepCollectionEquality().hash(sizes),const DeepCollectionEquality().hash(colors),isDiscounted,discountPercentage);
 
 @override
 String toString() {
-  return 'AddItemModel(imagePath: $imagePath, isLoading: $isLoading, selectedCategory: $selectedCategory, catergories: $catergories, sizes: $sizes, colors: $colors, isDiscounted: $isDiscounted, discountPercentage: $discountPercentage)';
+  return 'AddItemModel(imagePath: $imagePath, isLoading: $isLoading, selectedCategory: $selectedCategory, categories: $categories, sizes: $sizes, colors: $colors, isDiscounted: $isDiscounted, discountPercentage: $discountPercentage)';
 }
 
 
@@ -49,7 +49,7 @@ abstract mixin class $AddItemModelCopyWith<$Res>  {
   factory $AddItemModelCopyWith(AddItemModel value, $Res Function(AddItemModel) _then) = _$AddItemModelCopyWithImpl;
 @useResult
 $Res call({
- String? imagePath, bool? isLoading, String? selectedCategory, List<String> catergories, List<String> sizes, List<String> colors, bool? isDiscounted, String? discountPercentage
+ String? imagePath, bool? isLoading, String? selectedCategory, List<String> categories, List<String> sizes, List<String> colors, bool? isDiscounted, String? discountPercentage
 });
 
 
@@ -66,12 +66,12 @@ class _$AddItemModelCopyWithImpl<$Res>
 
 /// Create a copy of AddItemModel
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? imagePath = freezed,Object? isLoading = freezed,Object? selectedCategory = freezed,Object? catergories = null,Object? sizes = null,Object? colors = null,Object? isDiscounted = freezed,Object? discountPercentage = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? imagePath = freezed,Object? isLoading = freezed,Object? selectedCategory = freezed,Object? categories = null,Object? sizes = null,Object? colors = null,Object? isDiscounted = freezed,Object? discountPercentage = freezed,}) {
   return _then(_self.copyWith(
 imagePath: freezed == imagePath ? _self.imagePath : imagePath // ignore: cast_nullable_to_non_nullable
 as String?,isLoading: freezed == isLoading ? _self.isLoading : isLoading // ignore: cast_nullable_to_non_nullable
 as bool?,selectedCategory: freezed == selectedCategory ? _self.selectedCategory : selectedCategory // ignore: cast_nullable_to_non_nullable
-as String?,catergories: null == catergories ? _self.catergories : catergories // ignore: cast_nullable_to_non_nullable
+as String?,categories: null == categories ? _self.categories : categories // ignore: cast_nullable_to_non_nullable
 as List<String>,sizes: null == sizes ? _self.sizes : sizes // ignore: cast_nullable_to_non_nullable
 as List<String>,colors: null == colors ? _self.colors : colors // ignore: cast_nullable_to_non_nullable
 as List<String>,isDiscounted: freezed == isDiscounted ? _self.isDiscounted : isDiscounted // ignore: cast_nullable_to_non_nullable
@@ -87,17 +87,17 @@ as String?,
 @JsonSerializable()
 
 class _AddItemModel implements AddItemModel {
-  const _AddItemModel({this.imagePath, this.isLoading, this.selectedCategory, final  List<String> catergories = const [], final  List<String> sizes = const [], final  List<String> colors = const [], this.isDiscounted, this.discountPercentage}): _catergories = catergories,_sizes = sizes,_colors = colors;
+  const _AddItemModel({this.imagePath, this.isLoading, this.selectedCategory, final  List<String> categories = const [], final  List<String> sizes = const [], final  List<String> colors = const [], this.isDiscounted, this.discountPercentage}): _categories = categories,_sizes = sizes,_colors = colors;
   factory _AddItemModel.fromJson(Map<String, dynamic> json) => _$AddItemModelFromJson(json);
 
 @override final  String? imagePath;
 @override final  bool? isLoading;
 @override final  String? selectedCategory;
- final  List<String> _catergories;
-@override@JsonKey() List<String> get catergories {
-  if (_catergories is EqualUnmodifiableListView) return _catergories;
+ final  List<String> _categories;
+@override@JsonKey() List<String> get categories {
+  if (_categories is EqualUnmodifiableListView) return _categories;
   // ignore: implicit_dynamic_type
-  return EqualUnmodifiableListView(_catergories);
+  return EqualUnmodifiableListView(_categories);
 }
 
  final  List<String> _sizes;
@@ -130,16 +130,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _AddItemModel&&(identical(other.imagePath, imagePath) || other.imagePath == imagePath)&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.selectedCategory, selectedCategory) || other.selectedCategory == selectedCategory)&&const DeepCollectionEquality().equals(other._catergories, _catergories)&&const DeepCollectionEquality().equals(other._sizes, _sizes)&&const DeepCollectionEquality().equals(other._colors, _colors)&&(identical(other.isDiscounted, isDiscounted) || other.isDiscounted == isDiscounted)&&(identical(other.discountPercentage, discountPercentage) || other.discountPercentage == discountPercentage));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _AddItemModel&&(identical(other.imagePath, imagePath) || other.imagePath == imagePath)&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.selectedCategory, selectedCategory) || other.selectedCategory == selectedCategory)&&const DeepCollectionEquality().equals(other._categories, _categories)&&const DeepCollectionEquality().equals(other._sizes, _sizes)&&const DeepCollectionEquality().equals(other._colors, _colors)&&(identical(other.isDiscounted, isDiscounted) || other.isDiscounted == isDiscounted)&&(identical(other.discountPercentage, discountPercentage) || other.discountPercentage == discountPercentage));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,imagePath,isLoading,selectedCategory,const DeepCollectionEquality().hash(_catergories),const DeepCollectionEquality().hash(_sizes),const DeepCollectionEquality().hash(_colors),isDiscounted,discountPercentage);
+int get hashCode => Object.hash(runtimeType,imagePath,isLoading,selectedCategory,const DeepCollectionEquality().hash(_categories),const DeepCollectionEquality().hash(_sizes),const DeepCollectionEquality().hash(_colors),isDiscounted,discountPercentage);
 
 @override
 String toString() {
-  return 'AddItemModel(imagePath: $imagePath, isLoading: $isLoading, selectedCategory: $selectedCategory, catergories: $catergories, sizes: $sizes, colors: $colors, isDiscounted: $isDiscounted, discountPercentage: $discountPercentage)';
+  return 'AddItemModel(imagePath: $imagePath, isLoading: $isLoading, selectedCategory: $selectedCategory, categories: $categories, sizes: $sizes, colors: $colors, isDiscounted: $isDiscounted, discountPercentage: $discountPercentage)';
 }
 
 
@@ -150,7 +150,7 @@ abstract mixin class _$AddItemModelCopyWith<$Res> implements $AddItemModelCopyWi
   factory _$AddItemModelCopyWith(_AddItemModel value, $Res Function(_AddItemModel) _then) = __$AddItemModelCopyWithImpl;
 @override @useResult
 $Res call({
- String? imagePath, bool? isLoading, String? selectedCategory, List<String> catergories, List<String> sizes, List<String> colors, bool? isDiscounted, String? discountPercentage
+ String? imagePath, bool? isLoading, String? selectedCategory, List<String> categories, List<String> sizes, List<String> colors, bool? isDiscounted, String? discountPercentage
 });
 
 
@@ -167,12 +167,12 @@ class __$AddItemModelCopyWithImpl<$Res>
 
 /// Create a copy of AddItemModel
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? imagePath = freezed,Object? isLoading = freezed,Object? selectedCategory = freezed,Object? catergories = null,Object? sizes = null,Object? colors = null,Object? isDiscounted = freezed,Object? discountPercentage = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? imagePath = freezed,Object? isLoading = freezed,Object? selectedCategory = freezed,Object? categories = null,Object? sizes = null,Object? colors = null,Object? isDiscounted = freezed,Object? discountPercentage = freezed,}) {
   return _then(_AddItemModel(
 imagePath: freezed == imagePath ? _self.imagePath : imagePath // ignore: cast_nullable_to_non_nullable
 as String?,isLoading: freezed == isLoading ? _self.isLoading : isLoading // ignore: cast_nullable_to_non_nullable
 as bool?,selectedCategory: freezed == selectedCategory ? _self.selectedCategory : selectedCategory // ignore: cast_nullable_to_non_nullable
-as String?,catergories: null == catergories ? _self._catergories : catergories // ignore: cast_nullable_to_non_nullable
+as String?,categories: null == categories ? _self._categories : categories // ignore: cast_nullable_to_non_nullable
 as List<String>,sizes: null == sizes ? _self._sizes : sizes // ignore: cast_nullable_to_non_nullable
 as List<String>,colors: null == colors ? _self._colors : colors // ignore: cast_nullable_to_non_nullable
 as List<String>,isDiscounted: freezed == isDiscounted ? _self.isDiscounted : isDiscounted // ignore: cast_nullable_to_non_nullable

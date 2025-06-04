@@ -9,7 +9,7 @@ abstract class AddItemModel with _$AddItemModel {
     String? imagePath,
     bool? isLoading,
     String? selectedCategory,
-    @Default([]) List<String> catergories,
+    @Default([]) List<String> categories,
     @Default([]) List<String> sizes,
     @Default([]) List<String> colors,
     bool? isDiscounted,

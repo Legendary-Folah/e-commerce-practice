@@ -12,6 +12,7 @@ class CustomTextField extends StatelessWidget {
     this.inputFormatters,
     this.keyboardType,
     this.validator,
+    this.onFieldSubmitted,
   });
 
   final TextEditingController controller;
@@ -21,10 +22,12 @@ class CustomTextField extends StatelessWidget {
   final FormFieldValidator<String?>? validator;
   final List<TextInputFormatter>? inputFormatters;
   final TextInputType? keyboardType;
+  final Function(String)? onFieldSubmitted;
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      onFieldSubmitted: onFieldSubmitted,
       validator: validator,
       inputFormatters: inputFormatters,
       keyboardType: keyboardType,
