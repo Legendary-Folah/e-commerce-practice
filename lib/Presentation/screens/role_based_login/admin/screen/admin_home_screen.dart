@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:e_commerce_app/Presentation/screens/login_screen.dart';
 import 'package:e_commerce_app/Presentation/screens/role_based_login/admin/screen/add_item.dart';
 import 'package:e_commerce_app/core/colors.dart';
 import 'package:e_commerce_app/services/auth_service.dart';
@@ -37,6 +38,20 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                   Text(
                     'Your Uploaded Items',
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                  ),
+                  IconButton(
+                    onPressed: () {
+                      _authService.signOut();
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) {
+                            return LoginScreen();
+                          },
+                        ),
+                      );
+                    },
+                    icon: Icon(Icons.logout_rounded, color: ColorsConst.kBlack),
                   ),
                 ],
               ),
