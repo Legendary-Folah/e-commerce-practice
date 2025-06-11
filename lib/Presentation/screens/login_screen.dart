@@ -1,3 +1,4 @@
+import 'package:e_commerce_app/Presentation/screens/role_based_login/admin/screen/admin_forgot_password.dart';
 import 'package:e_commerce_app/Presentation/screens/role_based_login/admin/screen/admin_home_screen.dart';
 import 'package:e_commerce_app/Presentation/screens/role_based_login/user/user_app_first_screen.dart';
 import 'package:e_commerce_app/Presentation/screens/sign_up_screen.dart';
@@ -113,6 +114,22 @@ class _LoginScreenState extends State<LoginScreen> {
                           text: 'Log in',
                           onPressed: logIn,
                         ),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) {
+                            return AdminForgotPassword();
+                          },
+                        ),
+                      );
+                    },
+                    child: Text(
+                      'Forgot Password?',
+                      style: TextStyle(fontSize: 16),
+                    ),
+                  ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     spacing: 5,

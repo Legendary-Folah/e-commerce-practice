@@ -89,7 +89,6 @@ class AddItemNotifier extends StateNotifier<AddItemModel> {
         price.isEmpty ||
         state.imagePath == null ||
         state.selectedCategory == null ||
-        state.discountPercentage == null ||
         state.sizes.isEmpty ||
         state.colors.isEmpty) {
       throw Exception('Please fill all fields and upload an image');
@@ -100,7 +99,13 @@ class AddItemNotifier extends StateNotifier<AddItemModel> {
       final reference = FirebaseStorage.instance.ref().child(
         'images/$fileName',
       );
-      await reference.putFile(File(state.imagePath!));
+
+      final imageFile = File(state.imagePath!);
+      if (!imageFile.existsSync()) {
+        throw Exception('Image file does not exist');
+      }
+
+      await reference.putFile(imageFile);
       final imageURL = await reference.getDownloadURL();
 
       // save the items to firebase

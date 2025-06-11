@@ -16,6 +16,7 @@ class AdminHomeScreen extends StatefulWidget {
 
 class _AdminHomeScreenState extends State<AdminHomeScreen> {
   final AuthService _authService = AuthService();
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final CollectionReference items = FirebaseFirestore.instance.collection(
     'items',
   );
@@ -66,7 +67,11 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                       return Center(child: Text('Error: ${snapshot.error}'));
                     }
                     if (snapshot.connectionState == ConnectionState.waiting) {
-                      return Center(child: CircularProgressIndicator());
+                      return Center(
+                        child: CircularProgressIndicator(
+                          color: ColorsConst.kPurple,
+                        ),
+                      );
                     }
                     final document = snapshot.data?.docs ?? [];
                     if (document.isEmpty) {
@@ -144,6 +149,7 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
+        backgroundColor: ColorsConst.kPurple,
         onPressed: () {
           Navigator.push(
             context,
@@ -154,7 +160,7 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
             ),
           );
         },
-        child: Icon(Icons.add, color: ColorsConst.kBlack),
+        child: Icon(Icons.add, color: ColorsConst.kBlack, size: 16),
       ),
     );
   }

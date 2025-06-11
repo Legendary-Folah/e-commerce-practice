@@ -7,18 +7,36 @@ import 'package:e_commerce_app/core/widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class AddItem extends ConsumerWidget {
-  AddItem({super.key});
+class AddItem extends ConsumerStatefulWidget {
+  const AddItem({super.key});
 
+  @override
+  ConsumerState<AddItem> createState() => _AddItemState();
+}
+
+class _AddItemState extends ConsumerState<AddItem> {
   final TextEditingController _nameController = TextEditingController();
+
   final TextEditingController _priceController = TextEditingController();
+
   final TextEditingController _sizesController = TextEditingController();
+
   final TextEditingController _colorController = TextEditingController();
+
   final TextEditingController _discountPercentageController =
       TextEditingController();
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  void initState() {
+    super.initState();
+    // 🔥 Fetch categories when the widget is first built
+    Future.microtask(
+      () => ref.read(addItemProvider.notifier).fetchCategories(),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final addItemNotifier = ref.watch(addItemProvider.notifier);
     final addItemState = ref.watch(addItemProvider);
     return Scaffold(
@@ -65,22 +83,27 @@ class AddItem extends ConsumerWidget {
                 labelText: 'Price',
                 keyboardType: TextInputType.numberWithOptions(),
               ),
-              DropdownButtonFormField<String>(
-                decoration: InputDecoration(
-                  labelText: 'Category',
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                ),
-                value: addItemState.selectedCategory,
-                onChanged: addItemNotifier.selectCategory,
-                items: addItemState.categories.map((category) {
-                  return DropdownMenuItem<String>(
-                    value: category,
-                    child: Text(category),
-                  );
-                }).toList(),
-              ),
+              addItemState.categories.isEmpty
+                  ? DropdownMenuItem(
+                      value: null,
+                      child: Center(child: CircularProgressIndicator()),
+                    )
+                  : DropdownButtonFormField<String>(
+                      decoration: InputDecoration(
+                        labelText: 'Category',
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                      ),
+                      value: addItemState.selectedCategory,
+                      onChanged: addItemNotifier.selectCategory,
+                      items: addItemState.categories.map((category) {
+                        return DropdownMenuItem(
+                          value: category,
+                          child: Text(category),
+                        );
+                      }).toList(),
+                    ),
               CustomTextField(
                 onFieldSubmitted: (value) {
                   addItemNotifier.addSize(value);

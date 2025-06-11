@@ -61,4 +61,23 @@ class AuthService {
       print('Error signing out : $e');
     }
   }
+
+  Future<void> resetPassword(String email) async {
+    try {
+      // Send reset email
+      await _auth.sendPasswordResetEmail(email: email);
+
+      // Listen for password changes (optional)
+      _auth.authStateChanges().listen((User? user) {
+        if (user != null && user.email == email.trim()) {
+          // Can update lastReset timestamp if needed
+          _firestore.collection('users').doc(user.uid).update({
+            'lastPasswordReset': FieldValue.serverTimestamp(),
+          });
+        }
+      });
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
 }
