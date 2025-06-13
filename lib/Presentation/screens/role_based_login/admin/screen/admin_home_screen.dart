@@ -94,16 +94,7 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                             borderRadius: BorderRadius.circular(10),
                             child: ListTile(
                               leading: ClipRect(
-                                child: CachedNetworkImage(
-                                  imageUrl: item['image'],
-                                  width: 50,
-                                  height: 50,
-                                  fit: BoxFit.cover,
-                                  placeholder: (context, url) =>
-                                      CircularProgressIndicator(),
-                                  errorWidget: (context, url, error) =>
-                                      Icon(Icons.error),
-                                ),
+                                child: Icon(Icons.image, size: 30),
                               ),
                               title: Text(
                                 item['name'] ?? 'N/A',

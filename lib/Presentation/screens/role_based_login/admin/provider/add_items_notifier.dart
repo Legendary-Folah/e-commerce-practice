@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_commerce_app/Presentation/screens/role_based_login/admin/models/add_item_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -87,7 +88,7 @@ class AddItemNotifier extends StateNotifier<AddItemModel> {
   Future<void> saveAndUploadItem(String name, String price) async {
     if (name.isEmpty ||
         price.isEmpty ||
-        state.imagePath == null ||
+        // state.imagePath == null ||
         state.selectedCategory == null ||
         state.sizes.isEmpty ||
         state.colors.isEmpty) {
@@ -106,14 +107,15 @@ class AddItemNotifier extends StateNotifier<AddItemModel> {
       }
 
       await reference.putFile(imageFile);
-      final imageURL = await reference.getDownloadURL();
+      // final imageURL = await reference.getDownloadURL();
+      // final iconURL = Icon(Icons.image);
 
       // save the items to firebase
       final String uid = FirebaseAuth.instance.currentUser!.uid;
       await items.add({
         'name': name,
         'price': double.parse(price),
-        'imageURL': imageURL,
+        // 'imageURL': iconURL,
         'category': state.selectedCategory,
         'sizes': state.sizes,
         'colors': state.colors,

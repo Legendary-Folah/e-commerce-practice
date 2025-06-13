@@ -28,11 +28,8 @@ class _AddItemState extends ConsumerState<AddItem> {
 
   @override
   void initState() {
+    ref.read(addItemProvider.notifier).fetchCategories();
     super.initState();
-    // 🔥 Fetch categories when the widget is first built
-    Future.microtask(
-      () => ref.read(addItemProvider.notifier).fetchCategories(),
-    );
   }
 
   @override
@@ -49,34 +46,32 @@ class _AddItemState extends ConsumerState<AddItem> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Center(
-                child: Container(
-                  height: 140,
-                  width: 140,
-                  decoration: BoxDecoration(
-                    border: Border.all(),
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: addItemState.imagePath != null
-                      ? ClipRect(
-                          child: Image.file(
-                            File(addItemState.imagePath!),
-                            fit: BoxFit.cover,
-                          ),
-                        )
-                      : addItemState.isLoading ?? false
-                      ? CircularProgressIndicator()
-                      : GestureDetector(
-                          onTap: () {
-                            addItemNotifier.pickmage();
-                          },
-                          child: const Icon(
-                            Icons.add_a_photo,
-                            size: 30,
-                            color: Colors.grey,
-                          ),
-                        ),
-                ),
+                // child: Container(
+                //   height: 140,
+                //   width: 140,
+                //   decoration: BoxDecoration(
+                //     border: Border.all(),
+                //     borderRadius: BorderRadius.circular(10),
+                //   ),
+                //   child: addItemState.imagePath != null
+                //       ? ClipRect(
+                //           child: Center(child: Icon(Icons.image, size: 140)),
+                //         )
+                //       : addItemState.isLoading ?? false
+                //       ? CircularProgressIndicator()
+                //       : GestureDetector(
+                //           onTap: () {
+                //             addItemNotifier.pickmage();
+                //           },
+                //           child: const Icon(
+                //             Icons.add_a_photo,
+                //             size: 30,
+                //             color: Colors.grey,
+                //           ),
+                //         ),
+                // ),
               ),
+              Icon(Icons.image_aspect_ratio_rounded, size: 50),
               CustomTextField(controller: _nameController, labelText: 'Name'),
               CustomTextField(
                 controller: _priceController,
