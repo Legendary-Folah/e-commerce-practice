@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_commerce_app/Presentation/screens/login_screen.dart';
 import 'package:e_commerce_app/Presentation/screens/role_based_login/admin/screen/admin_home_screen.dart';
-import 'package:e_commerce_app/Presentation/screens/role_based_login/user/user_app_first_screen.dart';
+import 'package:e_commerce_app/Presentation/screens/role_based_login/user/main_app_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -80,6 +80,6 @@ class _AuthStateHandlerState extends State<AuthStateHandler> {
     if (userRole == null) {
       return Scaffold(body: Center(child: CircularProgressIndicator()));
     }
-    return userRole == 'Admin' ? AdminHomeScreen() : UserAppFirstScreen();
+    return userRole == 'Admin' ? AdminHomeScreen() : MainAppScreen();
   }
 }

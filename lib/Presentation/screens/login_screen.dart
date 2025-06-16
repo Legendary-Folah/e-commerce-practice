@@ -1,6 +1,6 @@
 import 'package:e_commerce_app/Presentation/screens/role_based_login/admin/screen/admin_forgot_password.dart';
 import 'package:e_commerce_app/Presentation/screens/role_based_login/admin/screen/admin_home_screen.dart';
-import 'package:e_commerce_app/Presentation/screens/role_based_login/user/user_app_first_screen.dart';
+import 'package:e_commerce_app/Presentation/screens/role_based_login/user/main_app_screen.dart';
 import 'package:e_commerce_app/Presentation/screens/sign_up_screen.dart';
 import 'package:e_commerce_app/core/form_validations.dart';
 import 'package:e_commerce_app/core/widgets/custom_button.dart';
@@ -56,7 +56,7 @@ class _LoginScreenState extends State<LoginScreen> {
         context,
         MaterialPageRoute(
           builder: (_) {
-            return UserAppFirstScreen(); // Replace with your admin dashboard
+            return MainAppScreen(); // Replace with your admin dashboard
           },
         ),
       );
