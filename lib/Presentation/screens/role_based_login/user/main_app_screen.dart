@@ -1,3 +1,4 @@
+import 'package:e_commerce_app/Presentation/screens/role_based_login/user/app_home_screen.dart';
 import 'package:e_commerce_app/core/colors.dart';
 import 'package:flutter/material.dart';
 
@@ -11,7 +12,7 @@ class MainAppScreen extends StatefulWidget {
 class _MainAppScreenState extends State<MainAppScreen> {
   int _currentIndex = 0;
   final List pages = [
-    Center(child: Text('Home')),
+    AppHomeScreen(),
     Center(child: Text('Explore')),
     Center(child: Text('Notification')),
     Center(child: Text('Profile')),
@@ -20,7 +21,6 @@ class _MainAppScreenState extends State<MainAppScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: ColorsConst.kWhite,
-      appBar: AppBar(backgroundColor: ColorsConst.kWhite),
       bottomNavigationBar: BottomNavigationBar(
         onTap: (value) {
           setState(() {
