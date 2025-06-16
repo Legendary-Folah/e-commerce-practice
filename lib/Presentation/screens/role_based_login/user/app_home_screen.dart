@@ -14,15 +14,16 @@ class _AppHomeScreenState extends State<AppHomeScreen> {
     return SafeArea(
       child: Scaffold(
         backgroundColor: ColorsConst.kWhite,
-        body: Padding(
-          padding: EdgeInsetsGeometry.symmetric(horizontal: 20),
-          child: Column(
-            children: [
-              Row(
+        body: Column(
+          children: [
+            Padding(
+              padding: EdgeInsetsGeometry.symmetric(horizontal: 20),
+              child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Image.asset('assets/images/meeting.png', height: 35),
                   Stack(
+                    clipBehavior: Clip.none,
                     children: [
                       IconButton(
                         onPressed: () {},
@@ -39,7 +40,7 @@ class _AppHomeScreenState extends State<AppHomeScreen> {
                               '3',
                               style: TextStyle(
                                 color: ColorsConst.kWhite,
-                                fontSize: 10,
+                                fontSize: 8,
                               ),
                             ),
                           ),
@@ -49,8 +50,96 @@ class _AppHomeScreenState extends State<AppHomeScreen> {
                   ),
                 ],
               ),
-            ],
-          ),
+            ),
+            SizedBox(height: 4),
+            MyBanner(),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class MyBanner extends StatelessWidget {
+  const MyBanner({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
+    return Container(
+      height: size.height * 0.25,
+      width: size.width,
+      color: ColorsConst().bannerColor,
+      child: Padding(
+        padding: EdgeInsetsGeometry.symmetric(horizontal: 20),
+        child: Stack(
+          children: [
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              spacing: 3,
+              children: [
+                Text(
+                  'NEW COLLECTIONS',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20,
+                    letterSpacing: -2,
+                  ),
+                ),
+                Row(
+                  children: [
+                    Text(
+                      '20',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 38,
+                        letterSpacing: -3,
+                      ),
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          '%',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 15,
+                            letterSpacing: -1.5,
+                            height: 0.8,
+                          ),
+                        ),
+                        Text(
+                          'OFF',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 15,
+                            letterSpacing: -1.5,
+                            height: 0.8,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+                MaterialButton(
+                  color: ColorsConst.kBlack,
+                  onPressed: () {},
+                  child: Text(
+                    'SHOP NOW',
+                    style: TextStyle(color: ColorsConst.kWhite),
+                  ),
+                ),
+              ],
+            ),
+            Align(
+              alignment: Alignment.bottomRight,
+              child: Image.asset(
+                'assets/images/democracy.png',
+                height: size.height * 0.19,
+              ),
+            ),
+          ],
         ),
       ),
     );
