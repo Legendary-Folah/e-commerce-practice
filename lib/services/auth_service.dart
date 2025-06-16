@@ -4,6 +4,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  final CollectionReference items = FirebaseFirestore.instance.collection(
+    'items',
+  );
+  String? selectedCategory;
 
   Future<String?> signUp({
     required String name,
@@ -79,5 +83,14 @@ class AuthService {
     } catch (e) {
       throw Exception(e);
     }
+  }
+
+  Stream<QuerySnapshot> getItemStream(String uid) {
+    Query query = items.where('uid', isEqualTo: uid);
+
+    if (selectedCategory != null) {
+      query = query.where('category', isEqualTo: selectedCategory);
+    }
+    return query.snapshots();
   }
 }

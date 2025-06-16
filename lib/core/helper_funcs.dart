@@ -8,7 +8,7 @@ extension ContextExtension on BuildContext {
         content: Text(message),
         backgroundColor: ColorsConst.kGreen,
         action: SnackBarAction(
-          label: 'X',
+          label: 'Dismiss',
           textColor: ColorsConst.kWhite,
           onPressed: () {
             if (onDismiss != null) {

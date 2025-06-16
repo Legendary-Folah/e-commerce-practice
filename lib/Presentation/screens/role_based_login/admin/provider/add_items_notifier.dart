@@ -4,7 +4,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_commerce_app/Presentation/screens/role_based_login/admin/models/add_item_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -96,17 +95,17 @@ class AddItemNotifier extends StateNotifier<AddItemModel> {
     }
     state = state.copyWith(isLoading: true);
     try {
-      final fileName = DateTime.now().microsecondsSinceEpoch.toString();
-      final reference = FirebaseStorage.instance.ref().child(
-        'images/$fileName',
-      );
+      // final fileName = DateTime.now().microsecondsSinceEpoch.toString();
+      // final reference = FirebaseStorage.instance.ref().child(
+      //   'images/$fileName',
+      // );
 
-      final imageFile = File(state.imagePath!);
-      if (!imageFile.existsSync()) {
-        throw Exception('Image file does not exist');
-      }
+      // final imageFile = File(state.imagePath!);
+      // if (!imageFile.existsSync()) {
+      //   throw Exception('Image file does not exist');
+      // }
 
-      await reference.putFile(imageFile);
+      // await reference.putFile(imageFile);
       // final imageURL = await reference.getDownloadURL();
       // final iconURL = Icon(Icons.image);
 

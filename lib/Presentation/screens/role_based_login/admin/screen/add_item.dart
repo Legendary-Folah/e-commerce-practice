@@ -71,7 +71,7 @@ class _AddItemState extends ConsumerState<AddItem> {
                 //         ),
                 // ),
               ),
-              Icon(Icons.image_aspect_ratio_rounded, size: 50),
+              Center(child: Icon(Icons.image_aspect_ratio_rounded, size: 100)),
               CustomTextField(controller: _nameController, labelText: 'Name'),
               CustomTextField(
                 controller: _priceController,
@@ -177,6 +177,7 @@ class _AddItemState extends ConsumerState<AddItem> {
                             );
                             _nameController.clear();
                             _priceController.clear();
+                            Navigator.of(context).pop();
                           } catch (e) {
                             context.showErrorSnackBar(message: 'Error: $e');
                             throw Exception('Failed to add item: $e');
