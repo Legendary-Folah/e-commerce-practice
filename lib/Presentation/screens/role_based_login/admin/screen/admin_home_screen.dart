@@ -47,7 +47,7 @@ class _AdminHomeScreenState extends ConsumerState<AdminHomeScreen> {
     return Scaffold(
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
           child: Column(
             spacing: 10,
             children: [
@@ -117,7 +117,12 @@ class _AdminHomeScreenState extends ConsumerState<AdminHomeScreen> {
               ),
               Expanded(
                 child: StreamBuilder(
-                  stream: _authService.getItemStream(uid),
+                  stream: (selectedCategory == null)
+                      ? _authService.getItemStream(uid)
+                      : items
+                            .where('uid', isEqualTo: uid)
+                            .where('category', isEqualTo: selectedCategory)
+                            .snapshots(),
                   builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
                     if (snapshot.hasError) {
                       return Center(child: Text('Error: ${snapshot.error}'));
