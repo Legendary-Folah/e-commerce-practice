@@ -12,5 +12,7 @@ class ColorsConst {
   static const Color kRed = Colors.red;
   static const Color kYellow = Colors.yellow;
   static const Color kOrange = Colors.orange;
+  static const Color kAmber = Colors.amber;
   Color bannerColor = Color(0xffc4d1da);
+  Color lightBlack = Colors.black26;
 }
