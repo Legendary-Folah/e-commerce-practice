@@ -53,6 +53,23 @@ class _AppHomeScreenState extends State<AppHomeScreen> {
             ),
             SizedBox(height: 4),
             MyBanner(),
+            Padding(
+              padding: EdgeInsetsGeometry.symmetric(horizontal: 20),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Shop By Category',
+                    style: TextStyle(
+                      fontSize: 22,
+                      fontWeight: FontWeight.bold,
+                      letterSpacing: 1,
+                    ),
+                  ),
+                  Text('See All', style: TextStyle(color: ColorsConst.kGrey)),
+                ],
+              ),
+            ),
           ],
         ),
       ),
