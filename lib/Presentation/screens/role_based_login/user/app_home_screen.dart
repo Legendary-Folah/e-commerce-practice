@@ -1,3 +1,4 @@
+import 'package:e_commerce_app/Presentation/screens/role_based_login/user/detail_product_screen.dart';
 import 'package:e_commerce_app/core/colors.dart';
 import 'package:e_commerce_app/core/widgets/curated_item.dart';
 import 'package:e_commerce_app/core/widgets/my_custom_banner.dart';
@@ -136,6 +137,16 @@ class _AppHomeScreenState extends State<AppHomeScreen> {
                             ? EdgeInsetsGeometry.symmetric(horizontal: 20)
                             : EdgeInsetsGeometry.only(right: 20),
                         child: InkWell(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) {
+                                  return DetailProductScreen(appModel: item);
+                                },
+                              ),
+                            );
+                          },
                           child: CuratedItems(appModelItems: item, size: size),
                         ),
                       );
