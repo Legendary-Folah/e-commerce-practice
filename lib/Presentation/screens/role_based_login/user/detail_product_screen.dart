@@ -71,7 +71,7 @@ class _DetailProductScreenState extends State<DetailProductScreen> {
                       height: size.height * 0.4,
                       width: size.width * 0.84,
                     ),
-                    SizedBox(height: 20),
+                    SizedBox(height: 10),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -91,9 +91,92 @@ class _DetailProductScreenState extends State<DetailProductScreen> {
                         }),
                       ],
                     ),
+                    SizedBox(height: 10),
                   ],
                 );
               },
+            ),
+          ),
+          SizedBox(height: 5),
+          Padding(
+            padding: EdgeInsetsGeometry.all(20),
+            child: Stack(
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Text(
+                          'H&M',
+                          style: TextStyle(
+                            color: ColorsConst.kOrange,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                        SizedBox(width: 5),
+                        Text(
+                          widget.appModel.rating.toString(),
+                          style: TextStyle(),
+                        ),
+                        SizedBox(width: 5),
+                        Text(
+                          '${widget.appModel.review}',
+                          style: TextStyle(color: ColorsConst().lightBlack),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      width: size.width,
+                      child: Text(
+                        widget.appModel.name,
+                        maxLines: 1,
+                        style: TextStyle(
+                          fontSize: 16,
+                          height: 1.5,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ),
+                    Row(
+                      children: [
+                        Text(
+                          '\$${widget.appModel.price.toString()}.00',
+                          style: TextStyle(
+                            fontWeight: FontWeight.w600,
+                            color: ColorsConst.kPink,
+                            fontSize: 18,
+                            height: 1.5,
+                          ),
+                        ),
+                        SizedBox(width: 5),
+                        if (widget.appModel.isCheck == true)
+                          Text(
+                            '\$${widget.appModel.price + 250}.00',
+                            style: TextStyle(
+                              fontWeight: FontWeight.w600,
+                              color: ColorsConst().lightBlack2,
+                              decoration: TextDecoration.lineThrough,
+                              decorationColor: ColorsConst().lightBlack2,
+                            ),
+                          ),
+                      ],
+                    ),
+                  ],
+                ),
+                Align(
+                  alignment: Alignment.topRight,
+                  child: CircleAvatar(
+                    backgroundColor: ColorsConst.kWhite,
+                    radius: 18,
+                    child: Icon(
+                      Icons.favorite_border_outlined,
+                      color: ColorsConst.kBlack,
+                      size: 24,
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
         ],

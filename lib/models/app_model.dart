@@ -78,7 +78,7 @@ List<AppModel> appModel = [
     color: [ColorsConst.kOrange, ColorsConst.kPurple],
     description: "",
     image: 'assets/images/t-shirt-design.png',
-    name: 'Printed Shirts',
+    name: 'Printed Shirts For Your Admiration',
     price: 455,
     rating: 3.9,
     review: 126,
