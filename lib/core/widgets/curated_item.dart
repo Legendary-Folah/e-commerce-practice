@@ -13,6 +13,7 @@ class CuratedItems extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Container(
           padding: EdgeInsets.all(8),
@@ -84,6 +85,16 @@ class CuratedItems extends StatelessWidget {
               ),
             ),
             SizedBox(width: 5),
+            if (appModelItems.isCheck == true)
+              Text(
+                '\$${appModelItems.price + 250}.00',
+                style: TextStyle(
+                  fontWeight: FontWeight.w600,
+                  color: ColorsConst().lightBlack2,
+                  decoration: TextDecoration.lineThrough,
+                  decorationColor: ColorsConst().lightBlack2,
+                ),
+              ),
           ],
         ),
       ],
