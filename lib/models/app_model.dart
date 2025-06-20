@@ -31,7 +31,7 @@ class AppModel {
 List<AppModel> appModel = [
   AppModel(
     category: "Men",
-    color: [ColorsConst.kBlue, ColorsConst.kGrey],
+    color: [ColorsConst.kBlue, ColorsConst.kBlack, ColorsConst.kGrey],
     description: "",
     image: 'assets/images/partners.png',
     name: 'Oversized Fit Couple',
@@ -44,7 +44,7 @@ List<AppModel> appModel = [
 
   AppModel(
     category: "Teens",
-    color: [ColorsConst.kGreen, ColorsConst.kRed],
+    color: [ColorsConst.kGreen, ColorsConst.kRed, ColorsConst.kBlack],
     description:
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt"
         'fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum'
@@ -60,7 +60,7 @@ List<AppModel> appModel = [
 
   AppModel(
     category: "Baby",
-    color: [ColorsConst.kBlue, ColorsConst.kPurple],
+    color: [ColorsConst.kBlue, ColorsConst.kPurple, ColorsConst.kBlack],
     description:
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt"
         'fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum',
@@ -75,7 +75,7 @@ List<AppModel> appModel = [
 
   AppModel(
     category: "Women",
-    color: [ColorsConst.kOrange, ColorsConst.kPurple],
+    color: [ColorsConst.kOrange, ColorsConst.kBlack, ColorsConst.kPurple],
     description: "",
     image: 'assets/images/t-shirt-design.png',
     name: 'Printed Shirts For Your Admiration',
@@ -88,7 +88,7 @@ List<AppModel> appModel = [
 
   AppModel(
     category: "Kids",
-    color: [ColorsConst.kWhite, ColorsConst.kBlack],
+    color: [ColorsConst.kWhite, ColorsConst.kBlack, ColorsConst.kPurple],
     description:
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt"
         'fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum'

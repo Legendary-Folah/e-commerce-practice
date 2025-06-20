@@ -40,3 +40,8 @@ extension ContextExtension on BuildContext {
     );
   }
 }
+
+String description1 = "Elevate your casual wardrobe with your";
+String description2 =
+    ".Crafted from premium cotton for maximum comfort, "
+    "this relaxed-tee fit features";

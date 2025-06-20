@@ -12,6 +12,9 @@ class DetailProductScreen extends StatefulWidget {
 
 class _DetailProductScreenState extends State<DetailProductScreen> {
   int currentIndex = 0;
+  int selectedColorIndex = 1;
+  int selectedSizeIndex = 1;
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -100,87 +103,219 @@ class _DetailProductScreenState extends State<DetailProductScreen> {
           SizedBox(height: 5),
           Padding(
             padding: EdgeInsetsGeometry.all(20),
-            child: Stack(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                Row(
                   children: [
-                    Row(
-                      children: [
-                        Text(
-                          'H&M',
-                          style: TextStyle(
-                            color: ColorsConst.kOrange,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                        SizedBox(width: 5),
-                        Text(
-                          widget.appModel.rating.toString(),
-                          style: TextStyle(),
-                        ),
-                        SizedBox(width: 5),
-                        Text(
-                          '${widget.appModel.review}',
-                          style: TextStyle(color: ColorsConst().lightBlack),
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      width: size.width,
-                      child: Text(
-                        widget.appModel.name,
-                        maxLines: 1,
-                        style: TextStyle(
-                          fontSize: 16,
-                          height: 1.5,
-                          fontWeight: FontWeight.w600,
-                        ),
+                    Text(
+                      'H&M',
+                      style: TextStyle(
+                        color: ColorsConst.kOrange,
+                        fontWeight: FontWeight.w600,
                       ),
                     ),
-                    Row(
-                      children: [
-                        Text(
-                          '\$${widget.appModel.price.toString()}.00',
-                          style: TextStyle(
-                            fontWeight: FontWeight.w600,
-                            color: ColorsConst.kPink,
-                            fontSize: 18,
-                            height: 1.5,
-                          ),
+                    SizedBox(width: 5),
+                    Text(widget.appModel.rating.toString(), style: TextStyle()),
+                    SizedBox(width: 5),
+                    Text(
+                      '${widget.appModel.review}',
+                      style: TextStyle(color: ColorsConst().lightBlack),
+                    ),
+                    Spacer(),
+                    Icon(Icons.favorite_border, size: 22),
+                  ],
+                ),
+                SizedBox(
+                  width: size.width,
+                  child: Text(
+                    widget.appModel.name,
+                    maxLines: 1,
+                    style: TextStyle(
+                      fontSize: 16,
+                      height: 1.5,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ),
+                Row(
+                  children: [
+                    Text(
+                      '\$${widget.appModel.price.toString()}.00',
+                      style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        color: ColorsConst.kPink,
+                        fontSize: 18,
+                        height: 1.5,
+                      ),
+                    ),
+                    SizedBox(width: 5),
+                    if (widget.appModel.isCheck == true)
+                      Text(
+                        '\$${widget.appModel.price + 250}.00',
+                        style: TextStyle(
+                          fontWeight: FontWeight.w600,
+                          color: ColorsConst().lightBlack2,
+                          decoration: TextDecoration.lineThrough,
+                          decorationColor: ColorsConst().lightBlack2,
                         ),
-                        SizedBox(width: 5),
-                        if (widget.appModel.isCheck == true)
+                      ),
+                  ],
+                ),
+                SizedBox(height: 10),
+                Text(
+                  '$description1 ${widget.appModel.name} $description2',
+                  style: TextStyle(
+                    fontSize: 15,
+                    color: ColorsConst.kGrey,
+                    letterSpacing: 1,
+                    fontWeight: FontWeight.w400,
+                  ),
+                ),
+                SizedBox(height: 10),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(
+                      width: size.width / 2.2,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        spacing: 5,
+                        children: [
                           Text(
-                            '\$${widget.appModel.price + 250}.00',
+                            'Color',
                             style: TextStyle(
-                              fontWeight: FontWeight.w600,
-                              color: ColorsConst().lightBlack2,
-                              decoration: TextDecoration.lineThrough,
-                              decorationColor: ColorsConst().lightBlack2,
+                              fontWeight: FontWeight.w500,
+                              letterSpacing: 1.5,
                             ),
                           ),
-                      ],
+                          Row(
+                            spacing: 4,
+                            children: [
+                              ...List.generate(widget.appModel.color.length, (
+                                index,
+                              ) {
+                                final item = widget.appModel;
+                                return CircleAvatar(
+                                  backgroundColor: item.color[index],
+                                  radius: 18,
+                                  child: InkWell(
+                                    onTap: () {
+                                      setState(() {
+                                        selectedColorIndex = index;
+                                      });
+                                    },
+                                    child: Icon(
+                                      size: 18,
+                                      Icons.check,
+                                      color: selectedColorIndex == index
+                                          ? ColorsConst.kWhite
+                                          : ColorsConst.kTransparent,
+                                    ),
+                                  ),
+                                );
+                              }),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(
+                      width: size.width / 2.5,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        spacing: 5,
+                        children: [
+                          Text(
+                            'Sizes',
+                            style: TextStyle(
+                              fontWeight: FontWeight.w500,
+                              letterSpacing: 1.5,
+                            ),
+                          ),
+                          Row(
+                            spacing: 4,
+                            children: [
+                              ...List.generate(widget.appModel.size.length, (
+                                index,
+                              ) {
+                                final item = widget.appModel;
+                                return CircleAvatar(
+                                  backgroundColor: selectedSizeIndex == index
+                                      ? ColorsConst.kBlack
+                                      : ColorsConst.kWhite,
+                                  radius: 18,
+                                  child: InkWell(
+                                    onTap: () {
+                                      setState(() {
+                                        selectedSizeIndex = index;
+                                      });
+                                    },
+                                    child: Text(
+                                      item.size[index],
+                                      style: TextStyle(
+                                        color: selectedSizeIndex == index
+                                            ? ColorsConst.kWhite
+                                            : ColorsConst.kBlack,
+                                        fontSize: 14,
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              }),
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
                   ],
                 ),
-                Align(
-                  alignment: Alignment.topRight,
-                  child: CircleAvatar(
-                    backgroundColor: ColorsConst.kWhite,
-                    radius: 18,
-                    child: Icon(
-                      Icons.favorite_border_outlined,
+                SizedBox(height: 10),
+                Row(
+                  children: [
+                    ProductDetailsButton(
+                      size: size,
                       color: ColorsConst.kBlack,
-                      size: 24,
+                      onPressed: () {},
                     ),
-                  ),
+                  ],
                 ),
               ],
             ),
           ),
         ],
       ),
+    );
+  }
+}
+
+class ProductDetailsButton extends StatelessWidget {
+  const ProductDetailsButton({
+    super.key,
+    required this.size,
+    required this.color,
+    required this.onPressed,
+    this.width,
+    this.height,
+    this.border,
+    this.child,
+  });
+
+  final Size size;
+  final Color color;
+  final double? width;
+  final double? height;
+  final VoidCallback onPressed;
+  final BoxBorder? border;
+  final Widget? child;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: width,
+      height: height,
+      decoration: BoxDecoration(color: color, border: border),
+      child: ElevatedButton(onPressed: onPressed, child: child),
     );
   }
 }
