@@ -41,6 +41,12 @@ extension ContextExtension on BuildContext {
   }
 }
 
+// extension to override manual sizedbox everytime.
+extension WidgetSizedBoxFromNumExtension on num {
+  SizedBox get height => SizedBox(height: toDouble());
+  SizedBox get width => SizedBox(width: toDouble());
+}
+
 String description1 = "Elevate your casual wardrobe with your";
 String description2 =
     ".Crafted from premium cotton for maximum comfort, "
