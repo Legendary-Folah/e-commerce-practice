@@ -274,43 +274,20 @@ class _DetailProductScreenState extends State<DetailProductScreen> {
                 SizedBox(
                   width: size.width,
                   child: Row(
-                    spacing: 5,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       ProductDetailsButton(
+                        width: 150,
                         height: 50,
-                        color: ColorsConst.kBlack,
-                        backgroundColor: WidgetStateProperty.all(
-                          ColorsConst.kBlack,
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          spacing: 5,
-                          children: [
-                            Icon(
-                              Icons.shopping_cart_checkout_outlined,
-                              color: ColorsConst.kWhite,
-                            ),
-                            Text(
-                              'Add To Cart',
-                              style: TextStyle(
-                                fontSize: 16,
-                                color: ColorsConst.kWhite,
-                              ),
-                            ),
-                          ],
-                        ),
-                        onPressed: () {},
-                      ),
-                      ProductDetailsButton(
-                        height: 50,
-                        color: ColorsConst.kBlack,
                         backgroundColor: WidgetStateProperty.all(
                           ColorsConst.kWhite,
                         ),
+                        border: BoxBorder.all(
+                          color: ColorsConst.kBlack,
+                          width: 1,
+                        ),
                         child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          spacing: 5,
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
                             Icon(
                               Icons.shopping_cart_checkout_outlined,
@@ -319,11 +296,32 @@ class _DetailProductScreenState extends State<DetailProductScreen> {
                             Text(
                               'Add To Cart',
                               style: TextStyle(
-                                fontSize: 16,
+                                fontSize: 15,
                                 color: ColorsConst.kBlack,
                               ),
                             ),
                           ],
+                        ),
+                        onPressed: () {},
+                      ),
+                      ProductDetailsButton(
+                        width: 150,
+                        height: 50,
+                        backgroundColor: WidgetStateProperty.all(
+                          ColorsConst.kBlack,
+                        ),
+                        border: BoxBorder.all(
+                          color: ColorsConst.kWhite,
+                          width: 1,
+                        ),
+                        child: Center(
+                          child: Text(
+                            'BUY NOW',
+                            style: TextStyle(
+                              fontSize: 15,
+                              color: ColorsConst.kWhite,
+                            ),
+                          ),
                         ),
                         onPressed: () {},
                       ),
@@ -343,7 +341,6 @@ class ProductDetailsButton extends StatelessWidget {
   const ProductDetailsButton({
     super.key,
     this.size,
-    required this.color,
     required this.onPressed,
     this.backgroundColor,
     this.width,
@@ -353,7 +350,6 @@ class ProductDetailsButton extends StatelessWidget {
   });
 
   final Size? size;
-  final Color color;
   final double? width;
   final double? height;
   final VoidCallback onPressed;

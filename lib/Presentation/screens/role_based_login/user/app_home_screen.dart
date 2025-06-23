@@ -1,3 +1,4 @@
+import 'package:e_commerce_app/Presentation/screens/role_based_login/user/category_items.dart';
 import 'package:e_commerce_app/Presentation/screens/role_based_login/user/detail_product_screen.dart';
 import 'package:e_commerce_app/core/colors.dart';
 import 'package:e_commerce_app/core/widgets/curated_item.dart';
@@ -94,6 +95,17 @@ class _AppHomeScreenState extends State<AppHomeScreen> {
                                     categoryModel[index].name.toLowerCase(),
                               )
                               .toList();
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) {
+                                return CategoryItems(
+                                  category: categoryModel[index].name,
+                                  categoryItems: filteredItems,
+                                );
+                              },
+                            ),
+                          );
                         },
                         child: Column(
                           spacing: 8,
