@@ -270,15 +270,65 @@ class _DetailProductScreenState extends State<DetailProductScreen> {
                     ),
                   ],
                 ),
-                SizedBox(height: 10),
-                Row(
-                  children: [
-                    ProductDetailsButton(
-                      size: size,
-                      color: ColorsConst.kBlack,
-                      onPressed: () {},
-                    ),
-                  ],
+                SizedBox(height: 14),
+                SizedBox(
+                  width: size.width,
+                  child: Row(
+                    spacing: 5,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      ProductDetailsButton(
+                        height: 50,
+                        color: ColorsConst.kBlack,
+                        backgroundColor: WidgetStateProperty.all(
+                          ColorsConst.kBlack,
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          spacing: 5,
+                          children: [
+                            Icon(
+                              Icons.shopping_cart_checkout_outlined,
+                              color: ColorsConst.kWhite,
+                            ),
+                            Text(
+                              'Add To Cart',
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: ColorsConst.kWhite,
+                              ),
+                            ),
+                          ],
+                        ),
+                        onPressed: () {},
+                      ),
+                      ProductDetailsButton(
+                        height: 50,
+                        color: ColorsConst.kBlack,
+                        backgroundColor: WidgetStateProperty.all(
+                          ColorsConst.kWhite,
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          spacing: 5,
+                          children: [
+                            Icon(
+                              Icons.shopping_cart_checkout_outlined,
+                              color: ColorsConst.kBlack,
+                            ),
+                            Text(
+                              'Add To Cart',
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: ColorsConst.kBlack,
+                              ),
+                            ),
+                          ],
+                        ),
+                        onPressed: () {},
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),
@@ -292,30 +342,40 @@ class _DetailProductScreenState extends State<DetailProductScreen> {
 class ProductDetailsButton extends StatelessWidget {
   const ProductDetailsButton({
     super.key,
-    required this.size,
+    this.size,
     required this.color,
     required this.onPressed,
+    this.backgroundColor,
     this.width,
     this.height,
     this.border,
     this.child,
   });
 
-  final Size size;
+  final Size? size;
   final Color color;
   final double? width;
   final double? height;
   final VoidCallback onPressed;
   final BoxBorder? border;
   final Widget? child;
+  final WidgetStateProperty<Color?>? backgroundColor;
 
   @override
   Widget build(BuildContext context) {
     return Container(
       width: width,
       height: height,
-      decoration: BoxDecoration(color: color, border: border),
-      child: ElevatedButton(onPressed: onPressed, child: child),
+      decoration: BoxDecoration(border: border, shape: BoxShape.rectangle),
+      child: ElevatedButton(
+        onPressed: onPressed,
+        style: ButtonStyle(
+          backgroundColor: backgroundColor,
+          elevation: WidgetStateProperty.all(2),
+          shape: WidgetStateProperty.all(RoundedRectangleBorder()),
+        ),
+        child: child,
+      ),
     );
   }
 }

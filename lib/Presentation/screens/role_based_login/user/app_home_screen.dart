@@ -86,6 +86,15 @@ class _AppHomeScreenState extends State<AppHomeScreen> {
                     ...List.generate(
                       categoryModel.length,
                       (index) => InkWell(
+                        onTap: () {
+                          final filteredItems = appModel
+                              .where(
+                                (item) =>
+                                    item.category.toLowerCase() ==
+                                    categoryModel[index].name.toLowerCase(),
+                              )
+                              .toList();
+                        },
                         child: Column(
                           spacing: 8,
                           children: [
