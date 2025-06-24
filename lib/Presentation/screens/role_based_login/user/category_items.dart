@@ -104,32 +104,35 @@ class CategoryItems extends StatelessWidget {
               ),
             ),
             18.height,
-            SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Row(
-                children: [
-                  ...List.generate(subCategories.length, (index) {
-                    return InkWell(
-                      onTap: () {},
-                      child: Column(
-                        children: [
-                          Container(
-                            padding: EdgeInsets.symmetric(horizontal: 10),
-                            child: CircleAvatar(
-                              radius: 30,
-                              backgroundColor: ColorsConst().kLightGrey,
-                              backgroundImage: AssetImage(
-                                subCategories[index].image,
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10),
+              child: SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  children: [
+                    ...List.generate(subCategories.length, (index) {
+                      return InkWell(
+                        onTap: () {},
+                        child: Column(
+                          children: [
+                            Container(
+                              padding: EdgeInsets.symmetric(horizontal: 10),
+                              child: CircleAvatar(
+                                radius: 30,
+                                backgroundColor: ColorsConst().kLightGrey,
+                                backgroundImage: AssetImage(
+                                  subCategories[index].image,
+                                ),
                               ),
                             ),
-                          ),
-                          10.height,
-                          Text(subCategories[index].name),
-                        ],
-                      ),
-                    );
-                  }),
-                ],
+                            10.height,
+                            Text(subCategories[index].name),
+                          ],
+                        ),
+                      );
+                    }),
+                  ],
+                ),
               ),
             ),
             8.height,
@@ -225,7 +228,7 @@ class CategoryItems extends StatelessWidget {
                                       ),
                                       SizedBox(width: 5),
                                       Text(
-                                        '${item.review}',
+                                        '| ${item.review}',
                                         style: TextStyle(
                                           color: ColorsConst().lightBlack,
                                         ),
@@ -251,7 +254,7 @@ class CategoryItems extends StatelessWidget {
                                         '\$${item.price.toString()}.00',
                                         style: TextStyle(
                                           fontWeight: FontWeight.w600,
-                                          color: ColorsConst.kPink,
+                                          color: ColorsConst.kBlack,
                                           fontSize: 18,
                                           height: 1.5,
                                         ),

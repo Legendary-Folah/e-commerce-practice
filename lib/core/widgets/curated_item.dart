@@ -58,7 +58,7 @@ class CuratedItems extends StatelessWidget {
             Text(appModelItems.rating.toString(), style: TextStyle()),
             SizedBox(width: 5),
             Text(
-              '${appModelItems.review}',
+              '| ${appModelItems.review}',
               style: TextStyle(color: ColorsConst().lightBlack),
             ),
           ],
