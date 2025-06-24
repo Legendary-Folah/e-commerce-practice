@@ -1,25 +1,59 @@
-import 'package:e_commerce_app/Presentation/screens/role_based_login/user/detail_product_screen.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_commerce_app/core/colors.dart';
 import 'package:e_commerce_app/core/helper_funcs.dart';
-import 'package:e_commerce_app/models/app_model.dart';
 import 'package:e_commerce_app/models/category_model.dart';
 import 'package:e_commerce_app/models/sub_category_model.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
-class CategoryItems extends StatelessWidget {
+class CategoryItems extends StatefulWidget {
   const CategoryItems({
     super.key,
     required this.category,
-    required this.categoryItems,
+    required this.selectedCategory,
   });
 
   final String category;
-  final List<AppModel> categoryItems;
+  // final List<AppModel> categoryItems;
+  final String selectedCategory;
+
+  @override
+  State<CategoryItems> createState() => _CategoryItemsState();
+}
+
+class _CategoryItemsState extends State<CategoryItems> {
+  TextEditingController searchController = TextEditingController();
+  List<QueryDocumentSnapshot> allItems = [];
+  List<QueryDocumentSnapshot> filteredItems = [];
+
+  @override
+  void initState() {
+    searchController.addListener(onSearchChanged);
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    searchController.dispose();
+    super.dispose();
+  }
+
+  void onSearchChanged() {
+    String searchItem = searchController.text.toLowerCase();
+    setState(() {
+      filteredItems = allItems.where((item) {
+        final data = item.data() as Map<String, dynamic>;
+        final itemName = data['name'].toString().toLowerCase();
+        return itemName.contains(searchItem);
+      }).toList();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    final CollectionReference itemsCollection = FirebaseFirestore.instance
+        .collection('items');
     return Scaffold(
       backgroundColor: ColorsConst.kWhite,
       body: SafeArea(
@@ -47,9 +81,10 @@ class CategoryItems extends StatelessWidget {
                   ),
                   Expanded(
                     child: TextField(
+                      controller: searchController,
                       decoration: InputDecoration(
                         contentPadding: EdgeInsets.all(8),
-                        hintText: "$category's fashion...",
+                        hintText: "${widget.category}'s fashion...",
                         hintStyle: TextStyle(color: ColorsConst().lightBlack2),
                         filled: true,
                         fillColor: ColorsConst().kLightGrey,
@@ -139,25 +174,39 @@ class CategoryItems extends StatelessWidget {
             Expanded(
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: categoryItems.isEmpty
-                    ? Column(
-                        children: [
-                          SvgPicture.asset(
-                            'assets/images/sub_images/emptylist.svg',
-                            width: 120,
-                            height: 80,
+                child: StreamBuilder(
+                  stream: itemsCollection
+                      .where('category', isEqualTo: widget.selectedCategory)
+                      .snapshots(),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      final items = snapshot.data!.docs;
+                      if (allItems.isEmpty) {
+                        allItems = items;
+                        filteredItems = items;
+                      }
+                      if (filteredItems.isEmpty) {
+                        return Center(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            spacing: 20,
+                            children: [
+                              SvgPicture.asset(
+                                'assets/images/sub_images/emptylist.svg',
+                                height: 70,
+                                width: 35,
+                              ),
+                              Text(
+                                'No Items Found',
+                                style: TextStyle(fontSize: 18),
+                              ),
+                            ],
                           ),
-                          Text(
-                            'No Items available in this $category category',
-                            style: TextStyle(
-                              fontSize: 16,
-                              color: ColorsConst.kRed,
-                            ),
-                          ),
-                        ],
-                      )
-                    : GridView.builder(
-                        itemCount: categoryItems.length,
+                        );
+                      }
+
+                      return GridView.builder(
+                        itemCount: filteredItems.length,
                         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: 2,
                           childAspectRatio: 0.6,
@@ -165,24 +214,26 @@ class CategoryItems extends StatelessWidget {
                           mainAxisSpacing: 16,
                         ),
                         itemBuilder: (context, index) {
-                          final item = categoryItems[index];
+                          final doc = filteredItems[index];
+                          final item = doc.data() as Map<String, dynamic>;
+                          // final itemId = doc.id;
                           return GestureDetector(
                             onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) {
-                                    return DetailProductScreen(appModel: item);
-                                  },
-                                ),
-                              );
+                              // Navigator.push(
+                              //   context,
+                              //   MaterialPageRoute(
+                              //     builder: (context) {
+                              //       return ProductDetailScreen(appModel: item);
+                              //     },
+                              //   ),
+                              // );
                             },
                             child: SingleChildScrollView(
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Hero(
-                                    tag: item.image,
+                                    tag: doc.id,
                                     child: Container(
                                       padding: EdgeInsets.all(4),
                                       decoration: BoxDecoration(
@@ -190,7 +241,9 @@ class CategoryItems extends StatelessWidget {
                                         borderRadius: BorderRadius.circular(8),
                                         image: DecorationImage(
                                           fit: BoxFit.cover,
-                                          image: AssetImage(item.image),
+                                          image: AssetImage(
+                                            'assets/images/sub_images/watch.png',
+                                          ),
                                         ),
                                       ),
                                       height: size.height * 0.25,
@@ -222,23 +275,29 @@ class CategoryItems extends StatelessWidget {
                                         ),
                                       ),
                                       SizedBox(width: 5),
-                                      Text(
-                                        item.rating.toString(),
-                                        style: TextStyle(),
+                                      Icon(
+                                        Icons.star,
+                                        color: ColorsConst.kAmber,
+                                        size: 17,
                                       ),
-                                      SizedBox(width: 5),
-                                      Text(
-                                        '| ${item.review}',
-                                        style: TextStyle(
-                                          color: ColorsConst().lightBlack,
-                                        ),
-                                      ),
+                                      SizedBox(width: 3),
+                                      // Text(
+                                      //   item.rating.toString(),
+                                      //   style: TextStyle(),
+                                      // ),
+                                      // SizedBox(width: 5),
+                                      // Text(
+                                      //   '| ${item.review}',
+                                      //   style: TextStyle(
+                                      //     color: ColorsConst().lightBlack,
+                                      //   ),
+                                      // ),
                                     ],
                                   ),
                                   SizedBox(
                                     width: size.width * 0.5,
                                     child: Text(
-                                      item.name,
+                                      item['category'],
                                       maxLines: 1,
                                       overflow: TextOverflow.ellipsis,
                                       style: TextStyle(
@@ -251,18 +310,18 @@ class CategoryItems extends StatelessWidget {
                                   Row(
                                     children: [
                                       Text(
-                                        '\$${item.price.toString()}.00',
+                                        '\$${item['price'] * (1 - item['discountPercentage'] / 100)}',
                                         style: TextStyle(
                                           fontWeight: FontWeight.w600,
-                                          color: ColorsConst.kBlack,
+                                          color: ColorsConst.kPink,
                                           fontSize: 18,
                                           height: 1.5,
                                         ),
                                       ),
                                       SizedBox(width: 5),
-                                      if (item.isCheck == true)
+                                      if (item['isDiscounted'] == true)
                                         Text(
-                                          '\$${item.price + 250}.00',
+                                          '\$${item['price']}.00',
                                           style: TextStyle(
                                             fontWeight: FontWeight.w600,
                                             color: ColorsConst().lightBlack2,
@@ -279,7 +338,18 @@ class CategoryItems extends StatelessWidget {
                             ),
                           );
                         },
+                      );
+                    }
+                    if (snapshot.hasError) {
+                      return Center(child: Text('Error : $snapshot'));
+                    }
+                    return Center(
+                      child: CircularProgressIndicator(
+                        backgroundColor: ColorsConst.kPurple,
                       ),
+                    );
+                  },
+                ),
               ),
             ),
           ],

@@ -55,6 +55,8 @@ class CuratedItems extends StatelessWidget {
               ),
             ),
             SizedBox(width: 5),
+            Icon(Icons.star, color: ColorsConst.kAmber, size: 17),
+            SizedBox(width: 5),
             Text(appModelItems.rating.toString(), style: TextStyle()),
             SizedBox(width: 5),
             Text(

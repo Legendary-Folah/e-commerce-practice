@@ -2,15 +2,15 @@ import 'package:e_commerce_app/core/colors.dart';
 import 'package:e_commerce_app/models/app_model.dart';
 import 'package:flutter/material.dart';
 
-class DetailProductScreen extends StatefulWidget {
-  const DetailProductScreen({super.key, required this.appModel});
+class ProductDetailScreen extends StatefulWidget {
+  const ProductDetailScreen({super.key, required this.appModel});
   final AppModel appModel;
 
   @override
-  State<DetailProductScreen> createState() => _DetailProductScreenState();
+  State<ProductDetailScreen> createState() => _ProductDetailScreenState();
 }
 
-class _DetailProductScreenState extends State<DetailProductScreen> {
+class _ProductDetailScreenState extends State<ProductDetailScreen> {
   int currentIndex = 0;
   int selectedColorIndex = 1;
   int selectedSizeIndex = 1;

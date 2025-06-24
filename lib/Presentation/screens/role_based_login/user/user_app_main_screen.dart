@@ -1,18 +1,18 @@
-import 'package:e_commerce_app/Presentation/screens/role_based_login/user/app_home_screen.dart';
+import 'package:e_commerce_app/Presentation/screens/role_based_login/user/user_app_home_screen.dart';
 import 'package:e_commerce_app/core/colors.dart';
 import 'package:flutter/material.dart';
 
-class MainAppScreen extends StatefulWidget {
-  const MainAppScreen({super.key});
+class UserAppMainScreen extends StatefulWidget {
+  const UserAppMainScreen({super.key});
 
   @override
-  State<MainAppScreen> createState() => _MainAppScreenState();
+  State<UserAppMainScreen> createState() => _UserAppMainScreenState();
 }
 
-class _MainAppScreenState extends State<MainAppScreen> {
+class _UserAppMainScreenState extends State<UserAppMainScreen> {
   int _currentIndex = 0;
   final List pages = [
-    AppHomeScreen(),
+    UserAppHomeScreen(),
     Center(child: Text('Explore')),
     Center(child: Text('Notification')),
     Center(child: Text('Profile')),

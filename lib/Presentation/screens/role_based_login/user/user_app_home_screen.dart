@@ -1,5 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_commerce_app/Presentation/screens/role_based_login/user/category_items.dart';
-import 'package:e_commerce_app/Presentation/screens/role_based_login/user/detail_product_screen.dart';
+import 'package:e_commerce_app/Presentation/screens/role_based_login/user/product_detail_screen/product_detail_screen.dart';
 import 'package:e_commerce_app/core/colors.dart';
 import 'package:e_commerce_app/core/widgets/curated_item.dart';
 import 'package:e_commerce_app/core/widgets/my_custom_banner.dart';
@@ -7,14 +8,18 @@ import 'package:e_commerce_app/models/app_model.dart';
 import 'package:e_commerce_app/models/category_model.dart';
 import 'package:flutter/material.dart';
 
-class AppHomeScreen extends StatefulWidget {
-  const AppHomeScreen({super.key});
+class UserAppHomeScreen extends StatefulWidget {
+  const UserAppHomeScreen({super.key});
 
   @override
-  State<AppHomeScreen> createState() => _AppHomeScreenState();
+  State<UserAppHomeScreen> createState() => _UserAppHomeScreenState();
 }
 
-class _AppHomeScreenState extends State<AppHomeScreen> {
+class _UserAppHomeScreenState extends State<UserAppHomeScreen> {
+  // category collection
+  final CollectionReference categoriesCollection = FirebaseFirestore.instance
+      .collection('category');
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -80,53 +85,72 @@ class _AppHomeScreenState extends State<AppHomeScreen> {
                 ),
               ),
               SizedBox(height: 5),
-              SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  children: [
-                    ...List.generate(
-                      categoryModel.length,
-                      (index) => InkWell(
-                        onTap: () {
-                          final filteredItems = appModel
-                              .where(
-                                (item) =>
-                                    item.category.toLowerCase() ==
-                                    categoryModel[index].name.toLowerCase(),
-                              )
-                              .toList();
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (_) {
-                                return CategoryItems(
-                                  category: categoryModel[index].name,
-                                  categoryItems: filteredItems,
-                                );
-                              },
-                            ),
-                          );
-                        },
-                        child: Column(
-                          spacing: 8,
-                          children: [
-                            Container(
-                              padding: EdgeInsets.symmetric(horizontal: 16),
-                              child: CircleAvatar(
-                                radius: 30,
-                                backgroundColor: ColorsConst().bannerColor,
-                                backgroundImage: AssetImage(
-                                  categoryModel[index].image,
+              StreamBuilder(
+                stream: categoriesCollection.snapshots(),
+                builder:
+                    (context, AsyncSnapshot<QuerySnapshot> streamSnapshot) {
+                      if (streamSnapshot.hasData) {
+                        return SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          child: Row(
+                            children: [
+                              ...List.generate(
+                                streamSnapshot.data!.docs.length,
+                                (index) => InkWell(
+                                  onTap: () {
+                                    // final filteredItems = appModel
+                                    //     .where(
+                                    //       (item) =>
+                                    //           item.category.toLowerCase() ==
+                                    //           categoryModel[index].name
+                                    //               .toLowerCase(),
+                                    //     )
+                                    //     .toList();
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (_) {
+                                          return CategoryItems(
+                                            category: streamSnapshot
+                                                .data!
+                                                .docs[index]['name'],
+                                            selectedCategory: streamSnapshot
+                                                .data!
+                                                .docs[index]['name'],
+                                          );
+                                        },
+                                      ),
+                                    );
+                                  },
+                                  child: Column(
+                                    spacing: 8,
+                                    children: [
+                                      Container(
+                                        padding: EdgeInsets.symmetric(
+                                          horizontal: 16,
+                                        ),
+                                        child: CircleAvatar(
+                                          radius: 30,
+                                          backgroundColor:
+                                              ColorsConst().bannerColor,
+                                          backgroundImage: AssetImage(
+                                            categoryModel[index].image,
+                                          ),
+                                        ),
+                                      ),
+                                      Text(categoryModel[index].name),
+                                    ],
+                                  ),
                                 ),
                               ),
-                            ),
-                            Text(categoryModel[index].name),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
+                            ],
+                          ),
+                        );
+                      }
+                      return CircularProgressIndicator(
+                        color: ColorsConst.kPurple,
+                      );
+                    },
               ),
               SizedBox(height: 5),
               Padding(
@@ -163,7 +187,7 @@ class _AppHomeScreenState extends State<AppHomeScreen> {
                               context,
                               MaterialPageRoute(
                                 builder: (_) {
-                                  return DetailProductScreen(appModel: item);
+                                  return ProductDetailScreen(appModel: item);
                                 },
                               ),
                             );
