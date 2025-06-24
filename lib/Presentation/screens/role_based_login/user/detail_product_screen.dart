@@ -68,11 +68,14 @@ class _DetailProductScreenState extends State<DetailProductScreen> {
               itemBuilder: (context, index) {
                 return Column(
                   children: [
-                    Image.asset(
-                      widget.appModel.image,
-                      fit: BoxFit.cover,
-                      height: size.height * 0.4,
-                      width: size.width * 0.84,
+                    Hero(
+                      tag: widget.appModel.image,
+                      child: Image.asset(
+                        widget.appModel.image,
+                        fit: BoxFit.cover,
+                        height: size.height * 0.4,
+                        width: size.width * 0.84,
+                      ),
                     ),
                     SizedBox(height: 10),
                     Row(

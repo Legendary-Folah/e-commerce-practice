@@ -82,7 +82,7 @@ List<AppModel> appModel = [
     price: 455,
     rating: 3.9,
     review: 126,
-    size: ["L", "XL"],
+    size: ["L", "XL", "M"],
     isCheck: true,
   ),
 

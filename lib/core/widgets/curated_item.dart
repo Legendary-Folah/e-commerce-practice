@@ -15,27 +15,30 @@ class CuratedItems extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Container(
-          padding: EdgeInsets.all(8),
-          decoration: BoxDecoration(
-            color: ColorsConst().bannerColor,
-            borderRadius: BorderRadius.circular(8),
-            image: DecorationImage(
-              fit: BoxFit.cover,
-              image: AssetImage(appModelItems.image),
+        Hero(
+          tag: appModelItems.image,
+          child: Container(
+            padding: EdgeInsets.all(8),
+            decoration: BoxDecoration(
+              color: ColorsConst().bannerColor,
+              borderRadius: BorderRadius.circular(8),
+              image: DecorationImage(
+                fit: BoxFit.cover,
+                image: AssetImage(appModelItems.image),
+              ),
             ),
-          ),
-          height: size.height * 0.25,
-          width: size.width * 0.5,
-          child: Align(
-            alignment: Alignment.topRight,
-            child: CircleAvatar(
-              backgroundColor: ColorsConst().lightBlack2,
-              radius: 18,
-              child: Icon(
-                Icons.favorite_border_outlined,
-                color: ColorsConst.kWhite,
-                size: 24,
+            height: size.height * 0.25,
+            width: size.width * 0.5,
+            child: Align(
+              alignment: Alignment.topRight,
+              child: CircleAvatar(
+                backgroundColor: ColorsConst().lightBlack2,
+                radius: 18,
+                child: Icon(
+                  Icons.favorite_border_outlined,
+                  color: ColorsConst.kWhite,
+                  size: 24,
+                ),
               ),
             ),
           ),
