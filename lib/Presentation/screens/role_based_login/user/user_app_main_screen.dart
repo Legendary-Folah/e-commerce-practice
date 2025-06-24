@@ -20,6 +20,7 @@ class _UserAppMainScreenState extends State<UserAppMainScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // drawer: Drawer(),
       backgroundColor: ColorsConst.kWhite,
       bottomNavigationBar: BottomNavigationBar(
         onTap: (value) {

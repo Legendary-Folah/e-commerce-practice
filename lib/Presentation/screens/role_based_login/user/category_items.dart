@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_commerce_app/core/colors.dart';
 import 'package:e_commerce_app/core/helper_funcs.dart';
@@ -22,6 +24,7 @@ class CategoryItems extends StatefulWidget {
 }
 
 class _CategoryItemsState extends State<CategoryItems> {
+  Map<String, Map<String, dynamic>> randomValues = {};
   TextEditingController searchController = TextEditingController();
   List<QueryDocumentSnapshot> allItems = [];
   List<QueryDocumentSnapshot> filteredItems = [];
@@ -195,6 +198,7 @@ class _CategoryItemsState extends State<CategoryItems> {
                                 'assets/images/sub_images/emptylist.svg',
                                 height: 70,
                                 width: 35,
+                                color: ColorsConst.kRed,
                               ),
                               Text(
                                 'No Items Found',
@@ -216,7 +220,23 @@ class _CategoryItemsState extends State<CategoryItems> {
                         itemBuilder: (context, index) {
                           final doc = filteredItems[index];
                           final item = doc.data() as Map<String, dynamic>;
-                          // final itemId = doc.id;
+                          final itemId = doc.id;
+
+                          // used randomValue.containsKey(itemId) which caused null because
+                          // i'm checking randomValues.containsKey(itemId) before assigning.
+                          // So if the key is not there yet, nothing gets added.
+                          // So that's why using randomValue.putIfAbsent as
+                          // putIfAbsent() only inserts if the key is not already in the map.
+                          randomValues.putIfAbsent(
+                            itemId,
+                            () => {
+                              'rating':
+                                  '${Random().nextInt(2)}.${Random().nextInt(3) + 4}',
+                              'review': '${Random().nextInt(300) + 100}',
+                            },
+                          );
+                          final ratingView = randomValues[itemId]?['rating'];
+                          final reviewView = randomValues[itemId]?['review'];
                           return GestureDetector(
                             onTap: () {
                               // Navigator.push(
@@ -281,17 +301,14 @@ class _CategoryItemsState extends State<CategoryItems> {
                                         size: 17,
                                       ),
                                       SizedBox(width: 3),
-                                      // Text(
-                                      //   item.rating.toString(),
-                                      //   style: TextStyle(),
-                                      // ),
-                                      // SizedBox(width: 5),
-                                      // Text(
-                                      //   '| ${item.review}',
-                                      //   style: TextStyle(
-                                      //     color: ColorsConst().lightBlack,
-                                      //   ),
-                                      // ),
+                                      Text('$ratingView', style: TextStyle()),
+                                      SizedBox(width: 5),
+                                      Text(
+                                        '| $reviewView',
+                                        style: TextStyle(
+                                          color: ColorsConst().lightBlack,
+                                        ),
+                                      ),
                                     ],
                                   ),
                                   SizedBox(

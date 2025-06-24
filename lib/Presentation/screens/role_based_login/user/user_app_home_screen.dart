@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:e_commerce_app/Presentation/screens/login_screen/login_screen.dart';
 import 'package:e_commerce_app/Presentation/screens/role_based_login/user/category_items.dart';
 import 'package:e_commerce_app/Presentation/screens/role_based_login/user/product_detail_screen/product_detail_screen.dart';
 import 'package:e_commerce_app/core/colors.dart';
@@ -6,6 +7,7 @@ import 'package:e_commerce_app/core/widgets/curated_item.dart';
 import 'package:e_commerce_app/core/widgets/my_custom_banner.dart';
 import 'package:e_commerce_app/models/app_model.dart';
 import 'package:e_commerce_app/models/category_model.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class UserAppHomeScreen extends StatefulWidget {
@@ -19,6 +21,7 @@ class _UserAppHomeScreenState extends State<UserAppHomeScreen> {
   // category collection
   final CollectionReference categoriesCollection = FirebaseFirestore.instance
       .collection('category');
+  final FirebaseAuth _auth = FirebaseAuth.instance;
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +37,23 @@ class _UserAppHomeScreenState extends State<UserAppHomeScreen> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Image.asset('assets/images/meeting.png', height: 35),
+                    GestureDetector(
+                      onTap: () {
+                        //   _auth.signOut();
+                        //   Navigator.push(
+                        //     context,
+                        //     MaterialPageRoute(
+                        //       builder: (context) {
+                        //         return LoginScreen();
+                        //       },
+                        //     ),
+                        //   );
+                      },
+                      child: Image.asset(
+                        'assets/images/meeting.png',
+                        height: 35,
+                      ),
+                    ),
                     Stack(
                       clipBehavior: Clip.none,
                       children: [
