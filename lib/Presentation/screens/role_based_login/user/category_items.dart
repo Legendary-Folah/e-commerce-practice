@@ -208,7 +208,6 @@ class _CategoryItemsState extends State<CategoryItems> {
                           ),
                         );
                       }
-
                       return GridView.builder(
                         itemCount: filteredItems.length,
                         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -222,6 +221,16 @@ class _CategoryItemsState extends State<CategoryItems> {
                           final item = doc.data() as Map<String, dynamic>;
                           final itemId = doc.id;
 
+                          // if (randomValues.containsKey(itemId) == false) {
+                          //   // If the itemId is not already in randomValues, we generate a new random value.
+                          //   // This prevents overwriting existing values and ensures each item gets its own unique rating and review.
+                          //   randomValues[itemId] = {
+                          //     'rating':
+                          //         '${Random().nextInt(3)}.${Random().nextInt(4) + 4}',
+                          //     'review': '${Random().nextInt(300) + 100}',
+                          //   };
+                          // }
+
                           // used randomValue.containsKey(itemId) which caused null because
                           // i'm checking randomValues.containsKey(itemId) before assigning.
                           // So if the key is not there yet, nothing gets added.
@@ -231,12 +240,12 @@ class _CategoryItemsState extends State<CategoryItems> {
                             itemId,
                             () => {
                               'rating':
-                                  '${Random().nextInt(2)}.${Random().nextInt(3) + 4}',
+                                  '${Random().nextInt(2) + 3}.${Random().nextInt(5) + 4}',
                               'review': '${Random().nextInt(300) + 100}',
                             },
                           );
-                          final ratingView = randomValues[itemId]?['rating'];
-                          final reviewView = randomValues[itemId]?['review'];
+                          final ratingView = randomValues[itemId]!['rating'];
+                          final reviewView = randomValues[itemId]!['review'];
                           return GestureDetector(
                             onTap: () {
                               // Navigator.push(

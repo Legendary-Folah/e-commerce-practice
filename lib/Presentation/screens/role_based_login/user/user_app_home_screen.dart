@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:e_commerce_app/Presentation/screens/login_screen/login_screen.dart';
 import 'package:e_commerce_app/Presentation/screens/role_based_login/user/category_items.dart';
 import 'package:e_commerce_app/Presentation/screens/role_based_login/user/product_detail_screen/product_detail_screen.dart';
 import 'package:e_commerce_app/core/colors.dart';
@@ -21,7 +20,8 @@ class _UserAppHomeScreenState extends State<UserAppHomeScreen> {
   // category collection
   final CollectionReference categoriesCollection = FirebaseFirestore.instance
       .collection('category');
-  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final CollectionReference itemsCollection = FirebaseFirestore.instance
+      .collection('items');
 
   @override
   Widget build(BuildContext context) {
@@ -190,33 +190,50 @@ class _UserAppHomeScreenState extends State<UserAppHomeScreen> {
                 ),
               ),
               SizedBox(height: 6),
-              SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  children: [
-                    ...List.generate(appModel.length, (index) {
-                      final item = appModel[index];
-                      return Padding(
-                        padding: index == 0
-                            ? EdgeInsetsGeometry.symmetric(horizontal: 20)
-                            : EdgeInsetsGeometry.only(right: 20),
-                        child: InkWell(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (_) {
-                                  return ProductDetailScreen(appModel: item);
+              StreamBuilder(
+                stream: itemsCollection.snapshots(),
+                builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                  if (snapshot.hasData) {
+                    return SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Row(
+                        children: [
+                          ...List.generate(snapshot.data!.docs.length, (index) {
+                            final item = snapshot.data!.docs[index];
+                            return Padding(
+                              padding: index == 0
+                                  ? EdgeInsetsGeometry.symmetric(horizontal: 20)
+                                  : EdgeInsetsGeometry.only(right: 20),
+                              child: InkWell(
+                                onTap: () {
+                                  // Navigator.push(
+                                  //   context,
+                                  //   MaterialPageRoute(
+                                  //     builder: (_) {
+                                  //       return ProductDetailScreen(
+                                  //         appModel: item,
+                                  //       );
+                                  //     },
+                                  //   ),
+                                  // );
                                 },
+                                child: CuratedItems(
+                                  appModelItems: item,
+                                  size: size,
+                                ),
                               ),
                             );
-                          },
-                          child: CuratedItems(appModelItems: item, size: size),
-                        ),
-                      );
-                    }),
-                  ],
-                ),
+                          }),
+                        ],
+                      ),
+                    );
+                  }
+                  return Center(
+                    child: CircularProgressIndicator(
+                      color: ColorsConst.kPurple,
+                    ),
+                  );
+                },
               ),
             ],
           ),

@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:e_commerce_app/core/colors.dart';
 import 'package:flutter/material.dart';
 
@@ -51,3 +53,6 @@ String description1 = "Elevate your casual wardrobe with your";
 String description2 =
     ".Crafted from premium cotton for maximum comfort, "
     "this relaxed-tee fit features";
+
+String randomRating = '${Random().nextInt(2) + 3}.${Random().nextInt(5) + 4}';
+String randomReview = '${Random().nextInt(300) + 100}';

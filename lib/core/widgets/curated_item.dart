@@ -1,5 +1,7 @@
+import 'dart:math';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_commerce_app/core/colors.dart';
-import 'package:e_commerce_app/models/app_model.dart';
 import 'package:flutter/material.dart';
 
 class CuratedItems extends StatelessWidget {
@@ -8,7 +10,7 @@ class CuratedItems extends StatelessWidget {
     required this.appModelItems,
     required this.size,
   });
-  final AppModel appModelItems;
+  final DocumentSnapshot<Object?> appModelItems;
   final Size size;
   @override
   Widget build(BuildContext context) {
@@ -16,7 +18,7 @@ class CuratedItems extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Hero(
-          tag: appModelItems.image,
+          tag: appModelItems.id,
           child: Container(
             padding: EdgeInsets.all(8),
             decoration: BoxDecoration(
@@ -24,7 +26,7 @@ class CuratedItems extends StatelessWidget {
               borderRadius: BorderRadius.circular(8),
               image: DecorationImage(
                 fit: BoxFit.cover,
-                image: AssetImage(appModelItems.image),
+                image: AssetImage('assets/images/t-shirt-design.png'),
               ),
             ),
             height: size.height * 0.25,
@@ -57,10 +59,13 @@ class CuratedItems extends StatelessWidget {
             SizedBox(width: 5),
             Icon(Icons.star, color: ColorsConst.kAmber, size: 17),
             SizedBox(width: 5),
-            Text(appModelItems.rating.toString(), style: TextStyle()),
+            Text(
+              '${Random().nextInt(2) + 3}.${Random().nextInt(5) + 4}',
+              style: TextStyle(),
+            ),
             SizedBox(width: 5),
             Text(
-              '| ${appModelItems.review}',
+              '| ${Random().nextInt(300) + 100}',
               style: TextStyle(color: ColorsConst().lightBlack),
             ),
           ],
@@ -68,7 +73,7 @@ class CuratedItems extends StatelessWidget {
         SizedBox(
           width: size.width * 0.5,
           child: Text(
-            appModelItems.name,
+            appModelItems['name'] ?? 'N/A',
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             style: TextStyle(
@@ -81,7 +86,7 @@ class CuratedItems extends StatelessWidget {
         Row(
           children: [
             Text(
-              '\$${appModelItems.price.toString()}.00',
+              '\$${appModelItems['price'] * (1 - appModelItems['discountPercentage'] / 100)}',
               style: TextStyle(
                 fontWeight: FontWeight.w600,
                 color: ColorsConst.kPink,
@@ -90,9 +95,9 @@ class CuratedItems extends StatelessWidget {
               ),
             ),
             SizedBox(width: 5),
-            if (appModelItems.isCheck == true)
+            if (appModelItems['isDiscounted'] == true)
               Text(
-                '\$${appModelItems.price + 250}.00',
+                '\$${appModelItems['price'] + 250}.00',
                 style: TextStyle(
                   fontWeight: FontWeight.w600,
                   color: ColorsConst().lightBlack2,
