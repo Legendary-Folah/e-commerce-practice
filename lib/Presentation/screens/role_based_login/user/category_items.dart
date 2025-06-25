@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:e_commerce_app/Presentation/screens/role_based_login/user/product_detail_screen/product_detail_screen.dart';
 import 'package:e_commerce_app/core/colors.dart';
 import 'package:e_commerce_app/core/helper_funcs.dart';
 import 'package:e_commerce_app/models/category_model.dart';
@@ -248,14 +249,16 @@ class _CategoryItemsState extends State<CategoryItems> {
                           final reviewView = randomValues[itemId]!['review'];
                           return GestureDetector(
                             onTap: () {
-                              // Navigator.push(
-                              //   context,
-                              //   MaterialPageRoute(
-                              //     builder: (context) {
-                              //       return ProductDetailScreen(appModel: item);
-                              //     },
-                              //   ),
-                              // );
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) {
+                                    return ProductDetailScreen(
+                                      productItem: doc,
+                                    );
+                                  },
+                                ),
+                              );
                             },
                             child: SingleChildScrollView(
                               child: Column(

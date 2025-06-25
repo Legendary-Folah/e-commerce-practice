@@ -117,14 +117,6 @@ class _UserAppHomeScreenState extends State<UserAppHomeScreen> {
                                 streamSnapshot.data!.docs.length,
                                 (index) => InkWell(
                                   onTap: () {
-                                    // final filteredItems = appModel
-                                    //     .where(
-                                    //       (item) =>
-                                    //           item.category.toLowerCase() ==
-                                    //           categoryModel[index].name
-                                    //               .toLowerCase(),
-                                    //     )
-                                    //     .toList();
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
@@ -206,16 +198,16 @@ class _UserAppHomeScreenState extends State<UserAppHomeScreen> {
                                   : EdgeInsetsGeometry.only(right: 20),
                               child: InkWell(
                                 onTap: () {
-                                  // Navigator.push(
-                                  //   context,
-                                  //   MaterialPageRoute(
-                                  //     builder: (_) {
-                                  //       return ProductDetailScreen(
-                                  //         appModel: item,
-                                  //       );
-                                  //     },
-                                  //   ),
-                                  // );
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (_) {
+                                        return ProductDetailScreen(
+                                          productItem: item,
+                                        );
+                                      },
+                                    ),
+                                  );
                                 },
                                 child: CuratedItems(
                                   appModelItems: item,
@@ -227,6 +219,9 @@ class _UserAppHomeScreenState extends State<UserAppHomeScreen> {
                         ],
                       ),
                     );
+                  }
+                  if (snapshot.hasError) {
+                    return Center(child: Text('Error : $snapshot'));
                   }
                   return Center(
                     child: CircularProgressIndicator(

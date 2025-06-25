@@ -1,10 +1,12 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_commerce_app/core/colors.dart';
+import 'package:e_commerce_app/core/helper_funcs.dart';
 import 'package:e_commerce_app/models/app_model.dart';
 import 'package:flutter/material.dart';
 
 class ProductDetailScreen extends StatefulWidget {
-  const ProductDetailScreen({super.key, required this.appModel});
-  final AppModel appModel;
+  const ProductDetailScreen({super.key, required this.productItem});
+  final DocumentSnapshot<Object?> productItem;
 
   @override
   State<ProductDetailScreen> createState() => _ProductDetailScreenState();
@@ -69,9 +71,9 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                 return Column(
                   children: [
                     Hero(
-                      tag: widget.appModel.image,
+                      tag: widget.productItem.id,
                       child: Image.asset(
-                        widget.appModel.image,
+                        'assets/images/t-shirt-design.png',
                         fit: BoxFit.cover,
                         height: size.height * 0.4,
                         width: size.width * 0.84,
@@ -119,10 +121,10 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                       ),
                     ),
                     SizedBox(width: 5),
-                    Text(widget.appModel.rating.toString(), style: TextStyle()),
+                    Text(randomRating, style: TextStyle()),
                     SizedBox(width: 5),
                     Text(
-                      '${widget.appModel.review}',
+                      '| $randomReview',
                       style: TextStyle(color: ColorsConst().lightBlack),
                     ),
                     Spacer(),
