@@ -1,7 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_commerce_app/core/colors.dart';
 import 'package:e_commerce_app/core/helper_funcs.dart';
-import 'package:e_commerce_app/models/app_model.dart';
+import 'package:e_commerce_app/core/widgets/size_and_color.dart';
+
 import 'package:flutter/material.dart';
 
 class ProductDetailScreen extends StatefulWidget {
@@ -19,6 +20,9 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final finalPrice =
+        widget.productItem['price'] *
+        (1 - widget.productItem['discountPercentage'] / 100);
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
@@ -134,7 +138,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                 SizedBox(
                   width: size.width,
                   child: Text(
-                    widget.appModel.name,
+                    widget.productItem['name'] ?? 'N/A',
                     maxLines: 1,
                     style: TextStyle(
                       fontSize: 16,
@@ -146,7 +150,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                 Row(
                   children: [
                     Text(
-                      '\$${widget.appModel.price.toString()}.00',
+                      finalPrice.toString(),
                       style: TextStyle(
                         fontWeight: FontWeight.w600,
                         color: ColorsConst.kPink,
@@ -155,9 +159,9 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                       ),
                     ),
                     SizedBox(width: 5),
-                    if (widget.appModel.isCheck == true)
+                    if (widget.productItem['isDiscounted'] == true)
                       Text(
-                        '\$${widget.appModel.price + 250}.00',
+                        '\$${widget.productItem['price']}.00',
                         style: TextStyle(
                           fontWeight: FontWeight.w600,
                           color: ColorsConst().lightBlack2,
@@ -169,7 +173,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                 ),
                 SizedBox(height: 10),
                 Text(
-                  '$description1 ${widget.appModel.name} $description2',
+                  '$description1 ${widget.productItem['name']} $description2',
                   style: TextStyle(
                     fontSize: 15,
                     color: ColorsConst.kGrey,
@@ -178,102 +182,21 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                   ),
                 ),
                 SizedBox(height: 10),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(
-                      width: size.width / 2.2,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        spacing: 5,
-                        children: [
-                          Text(
-                            'Color',
-                            style: TextStyle(
-                              fontWeight: FontWeight.w500,
-                              letterSpacing: 1.5,
-                            ),
-                          ),
-                          Row(
-                            spacing: 4,
-                            children: [
-                              ...List.generate(widget.appModel.color.length, (
-                                index,
-                              ) {
-                                final item = widget.appModel;
-                                return CircleAvatar(
-                                  backgroundColor: item.color[index],
-                                  radius: 18,
-                                  child: InkWell(
-                                    onTap: () {
-                                      setState(() {
-                                        selectedColorIndex = index;
-                                      });
-                                    },
-                                    child: Icon(
-                                      size: 18,
-                                      Icons.check,
-                                      color: selectedColorIndex == index
-                                          ? ColorsConst.kWhite
-                                          : ColorsConst.kTransparent,
-                                    ),
-                                  ),
-                                );
-                              }),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                    SizedBox(
-                      width: size.width / 2.5,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        spacing: 5,
-                        children: [
-                          Text(
-                            'Sizes',
-                            style: TextStyle(
-                              fontWeight: FontWeight.w500,
-                              letterSpacing: 1.5,
-                            ),
-                          ),
-                          Row(
-                            spacing: 4,
-                            children: [
-                              ...List.generate(widget.appModel.size.length, (
-                                index,
-                              ) {
-                                final item = widget.appModel;
-                                return CircleAvatar(
-                                  backgroundColor: selectedSizeIndex == index
-                                      ? ColorsConst.kBlack
-                                      : ColorsConst.kWhite,
-                                  radius: 18,
-                                  child: InkWell(
-                                    onTap: () {
-                                      setState(() {
-                                        selectedSizeIndex = index;
-                                      });
-                                    },
-                                    child: Text(
-                                      item.size[index],
-                                      style: TextStyle(
-                                        color: selectedSizeIndex == index
-                                            ? ColorsConst.kWhite
-                                            : ColorsConst.kBlack,
-                                        fontSize: 14,
-                                      ),
-                                    ),
-                                  ),
-                                );
-                              }),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
+                SizeAndColor(
+                  colors: widget.productItem['colors'] ?? [],
+                  sizes: widget.productItem['sizes'] ?? [],
+                  onColorSelected: (index) {
+                    setState(() {
+                      selectedColorIndex = index;
+                    });
+                  },
+                  onSizeSelected: (index) {
+                    setState(() {
+                      selectedSizeIndex = index;
+                    });
+                  },
+                  selectedColorIndex: selectedColorIndex,
+                  selectedSizeIndex: selectedSizeIndex,
                 ),
                 SizedBox(height: 14),
                 SizedBox(

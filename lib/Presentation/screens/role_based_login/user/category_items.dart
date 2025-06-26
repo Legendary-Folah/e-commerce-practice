@@ -274,7 +274,7 @@ class _CategoryItemsState extends State<CategoryItems> {
                                         image: DecorationImage(
                                           fit: BoxFit.cover,
                                           image: AssetImage(
-                                            'assets/images/sub_images/watch.png',
+                                            'assets/images/sub_images/clothes.png',
                                           ),
                                         ),
                                       ),
